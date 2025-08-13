@@ -32,6 +32,9 @@ export interface ProjectContext {
 	rawContent: NonNullable<StarlightLllmsTextOptions['rawContent']>;
 	sidebarNav: NonNullable<StarlightLllmsTextOptions['sidebarNav']>;
 	federatedSites: NonNullable<StarlightLllmsTextOptions['federatedSites']>;
+	generatePageMarkdown: NonNullable<StarlightLllmsTextOptions['generatePageMarkdown']>;
+	markdownFilePattern: NonNullable<StarlightLllmsTextOptions['markdownFilePattern']>;
+	excludePages: NonNullable<StarlightLllmsTextOptions['excludePages']>;
 }
 
 /** Plugin user options. */
@@ -40,7 +43,7 @@ export interface StarlightLllmsTextOptions {
 	 * Provide a custom name for this project or software. This will be used in `llms.txt` to identify
 	 * what the documentation is for.
 	 *
-	 * Default: the value of Starlight’s `title` option.
+	 * Default: the value of Starlight's `title` option.
 	 *
 	 * @example "FastHTML"
 	 */
@@ -48,14 +51,14 @@ export interface StarlightLllmsTextOptions {
 
 	/**
 	 * Set a custom description for your documentation site to share with large language models.
-	 * Can include Markdown syntax. Will be displayed in `llms.txt` immediately after the file’s title.
+	 * Can include Markdown syntax. Will be displayed in `llms.txt` immediately after the file's title.
 	 *
 	 * According to <https://llmstxt.org/> this should be:
 	 *
 	 * > a short summary of the project, containing key information necessary for understanding the
 	 * > rest of the file
 	 *
-	 * Default: The value of Starlight’s `description` option.
+	 * Default: The value of Starlight's `description` option.
 	 *
 	 * @example
 	 * ```md
@@ -174,7 +177,7 @@ export interface StarlightLllmsTextOptions {
 
 	/**
 	 * String used to separate pages in the generated text.
-	 * @default "\n\n"
+	 * @default "\\n\\n"
 	 */
 	pageSeparator?: string;
 
@@ -221,4 +224,32 @@ export interface StarlightLllmsTextOptions {
 		url: string;
 		description?: string;
 	}>;
+
+	/**
+	 * Enable generation of individual markdown (.md) files for each documentation page.
+	 * This implements the second part of the llmstxt.org standard proposal.
+	 *
+	 * @default false
+	 */
+	generatePageMarkdown?: boolean;
+
+	/**
+	 * File naming pattern for individual markdown files.
+	 * - 'append': Adds .md to the existing URL (e.g., /docs/getting-started.html.md)
+	 * - 'replace': Replaces the extension with .md (e.g., /docs/getting-started.md)
+	 *
+	 * @default 'append'
+	 */
+	markdownFilePattern?: 'append' | 'replace';
+
+	/**
+	 * Page IDs to exclude from individual .md file generation. Supports glob patterns.
+	 *
+	 * @default ['404', 'search']
+	 *
+	 * @example
+	 * // Exclude specific pages from .md generation
+	 * excludePages: ['404', 'search', 'admin/**'],
+	 */
+	excludePages?: string[];
 }

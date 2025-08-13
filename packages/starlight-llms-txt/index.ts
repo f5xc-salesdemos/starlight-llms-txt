@@ -39,6 +39,14 @@ export default function starlightLlmsTxt(opts: StarlightLllmsTextOptions = {}): 
 								prerender: true,
 							});
 
+							// Inject the individual page markdown route if enabled
+							if (opts.generatePageMarkdown !== false) {
+								injectRoute({
+									entrypoint: new URL('./page-markdown.ts', import.meta.url),
+									pattern: '/[...slug].md',
+								});
+							}
+
 							const slugger = new GithubSlugger();
 							const projectContext: ProjectContext = {
 								base: astroConfig.base,
@@ -60,6 +68,9 @@ export default function starlightLlmsTxt(opts: StarlightLllmsTextOptions = {}): 
 								rawContent: opts.rawContent ?? false,
 								sidebarNav: opts.sidebarNav ?? false,
 								federatedSites: opts.federatedSites ?? [],
+								generatePageMarkdown: opts.generatePageMarkdown ?? false,
+								markdownFilePattern: opts.markdownFilePattern ?? 'append',
+								excludePages: opts.excludePages ?? ['404', 'search'],
 							};
 
 							const modules = {
