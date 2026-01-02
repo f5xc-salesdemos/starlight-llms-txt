@@ -39,11 +39,27 @@ export default function starlightLlmsTxt(opts: StarlightLllmsTextOptions = {}): 
 								prerender: true,
 							});
 
+							// Parse perPageMarkdown config
+							const perPageMarkdownConfig = (() => {
+								if (!opts.perPageMarkdown) {
+									return { enabled: false, extensionStrategy: 'append' as const, excludePages: ['404'] };
+								}
+								if (opts.perPageMarkdown === true) {
+									return { enabled: true, extensionStrategy: 'append' as const, excludePages: ['404'] };
+								}
+								return {
+									enabled: true,
+									extensionStrategy: opts.perPageMarkdown.extensionStrategy ?? 'append',
+									excludePages: opts.perPageMarkdown.excludePages ?? ['404'],
+								};
+							})();
+
 							// Inject the individual page Markdown route if enabled
-							if (opts.generatePageMarkdown !== false) {
+							if (perPageMarkdownConfig.enabled) {
 								injectRoute({
 									entrypoint: new URL('./page-markdown.ts', import.meta.url),
 									pattern: '/[...slug].md',
+									prerender: true,
 								});
 							}
 
@@ -68,9 +84,7 @@ export default function starlightLlmsTxt(opts: StarlightLllmsTextOptions = {}): 
 								rawContent: opts.rawContent ?? false,
 								sidebarNav: opts.sidebarNav ?? false,
 								federatedSites: opts.federatedSites ?? [],
-								generatePageMarkdown: opts.generatePageMarkdown ?? false,
-								markdownFilePattern: opts.markdownFilePattern ?? 'append',
-								excludePages: opts.excludePages ?? ['404', 'search'],
+								perPageMarkdown: perPageMarkdownConfig,
 							};
 
 							const modules = {
