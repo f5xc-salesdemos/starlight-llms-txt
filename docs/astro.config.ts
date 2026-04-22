@@ -1,9 +1,9 @@
 import starlight from '@astrojs/starlight';
 import { defineConfig } from 'astro/config';
-import starlightLlmsTxt from 'starlight-llms-txt';
+import starlightLlmsTxt from '@f5xc-salesdemos/starlight-llms-txt';
 
 export default defineConfig({
-	site: 'https://delucis.github.io',
+	site: 'https://f5xc-salesdemos.github.io',
 	base: '/starlight-llms-txt',
 	integrations: [
 		starlight({
@@ -13,11 +13,11 @@ export default defineConfig({
 				{
 					icon: 'github',
 					label: 'GitHub repository',
-					href: 'https://github.com/delucis/starlight-llms-txt',
+					href: 'https://github.com/f5xc-salesdemos/starlight-llms-txt',
 				},
 			],
 			editLink: {
-				baseUrl: 'https://github.com/delucis/starlight-llms-txt/edit/main/docs/',
+				baseUrl: 'https://github.com/f5xc-salesdemos/starlight-llms-txt/edit/main/docs/',
 			},
 			lastUpdated: true,
 			plugins: [

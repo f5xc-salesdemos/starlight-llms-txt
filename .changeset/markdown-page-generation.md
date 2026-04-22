@@ -1,5 +1,5 @@
 ---
-"starlight-llms-txt": minor
+"@f5xc-salesdemos/starlight-llms-txt": minor
 ---
 
 Add individual Markdown file generation for each documentation page

@@ -16,7 +16,7 @@ jobs:
           node-version: 24.14.1
           cache: pnpm
       - run: pnpm i
-      - run: pnpm --filter starlight-llms-txt test
+      - run: pnpm --filter @f5xc-salesdemos/starlight-llms-txt test
   smoke:
     name: Smoke test (docs build)
     runs-on: ubuntu-latest

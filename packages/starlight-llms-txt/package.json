@@ -1,13 +1,19 @@
 {
-	"name": "starlight-llms-txt",
+	"name": "@f5xc-salesdemos/starlight-llms-txt",
 	"version": "0.8.1",
 	"license": "MIT",
 	"description": "Generate llms.txt files to train large language models on your Starlight documentation website",
-	"author": "delucis",
+	"author": "f5xc-salesdemos (fork of delucis/starlight-llms-txt)",
 	"type": "module",
 	"exports": {
 		".": "./index.ts"
 	},
+	"files": [
+		"*.ts",
+		"!*.test.ts",
+		"!vitest.config.ts",
+		"CHANGELOG.md"
+	],
 	"dependencies": {
 		"@astrojs/mdx": "^5.0.3",
 		"@types/hast": "^3.0.4",
@@ -38,13 +44,13 @@
 	"publishConfig": {
 		"access": "public"
 	},
-	"homepage": "https://delucis.github.io/starlight-llms-txt/",
+	"homepage": "https://f5xc-salesdemos.github.io/starlight-llms-txt/",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/delucis/starlight-llms-txt.git",
+		"url": "https://github.com/f5xc-salesdemos/starlight-llms-txt.git",
 		"directory": "packages/starlight-llms-txt"
 	},
-	"bugs": "https://github.com/delucis/starlight-llms-txt/issues",
+	"bugs": "https://github.com/f5xc-salesdemos/starlight-llms-txt/issues",
 	"keywords": [
 		"llms.txt",
 		"withastro",
