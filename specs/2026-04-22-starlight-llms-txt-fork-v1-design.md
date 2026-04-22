@@ -576,14 +576,19 @@ Commit: `ci(release): swap owner guard, use NPM_TOKEN`.
 
 Commit: `chore(package): rename to @f5xc-salesdemos/starlight-llms-txt`.
 
-- Apply §7.1 rename.
+All renames and consumer updates must land atomically in one commit — running `pnpm build:docs` or `pnpm test` between the package rename and the consumer updates will fail or silently no-op.
+
+- Apply §7.1 rename to `packages/starlight-llms-txt/package.json`.
 - Add §7.8 `files` array; delete `.npmignore`.
 - Replace §7.6 README.
 - Update §7.3 changesets config changelog pointer.
 - Update §7.4 docs site URL.
-- Update the root `package.json` `test` script filter from `starlight-llms-txt` to `@f5xc-salesdemos/starlight-llms-txt` (the pnpm filter is the package name; it stops matching after rename).
-- Update the `test` job in `.github/workflows/ci.yml` similarly.
-- **Exit criteria:** `pnpm pack --filter @f5xc-salesdemos/starlight-llms-txt --dry-run` shows the expected file list with the correct package name; `pnpm test` still green; docs build still green.
+- `docs/package.json`: rename the workspace dependency key from `"starlight-llms-txt": "workspace:*"` to `"@f5xc-salesdemos/starlight-llms-txt": "workspace:*"` (otherwise `pnpm build:docs` fails on a dangling workspace reference).
+- `docs/astro.config.ts`: update the import from `'starlight-llms-txt'` to `'@f5xc-salesdemos/starlight-llms-txt'` (otherwise Astro fails to resolve the plugin).
+- Update the root `package.json` `test` script filter from `starlight-llms-txt` to `@f5xc-salesdemos/starlight-llms-txt` (the pnpm filter is the package name; it stops matching after rename and `pnpm test` silently exits zero with no tests run).
+- Update the `test` job in `.github/workflows/ci.yml` filter the same way.
+- Run `pnpm install` to update `pnpm-lock.yaml` (reflects the new workspace dep key).
+- **Exit criteria:** `pnpm pack --filter @f5xc-salesdemos/starlight-llms-txt --dry-run` shows the expected file list with the correct package name; `pnpm --filter @f5xc-salesdemos/starlight-llms-txt test` passes (explicitly naming the filter, so a silent no-match is impossible); `pnpm build:docs` green.
 
 ### C3. Initial 1.0.0 changeset
 
