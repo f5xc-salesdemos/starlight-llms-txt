@@ -296,44 +296,49 @@ Output:
 
 The block is placed between `## Sections` and `## Notes` — local navigation before cross-site traversal.
 
-### `generatePageMarkdown`
+### `perPageMarkdown`
 
-**Type:** `boolean`  
+**Type:** `boolean | { extensionStrategy?: 'append' | 'replace'; excludePages?: string[] }`  
 **Default:** `false`
 
-Enable generation of individual Markdown (.md) files for each documentation page.
-This implements the second part of the [llmstxt.org standard proposal](https://llmstxt.org/#proposal), 
-allowing LLMs to fetch specific documentation pages on-demand rather than processing entire documentation.
+Enable generation of individual Markdown (`.md`) files for each documentation page.
+This implements the second part of the [llmstxt.org standard proposal](https://llmstxt.org/#proposal),
+allowing LLMs to fetch specific documentation pages on-demand rather than processing the entire documentation.
 
-When enabled, clean Markdown versions of each page will be available at the same URL with `.md` appended
-(or replacing the extension, depending on `markdownFilePattern`).
+Set to `true` to enable with defaults, or pass an object for advanced configuration.
 
 ```js
-generatePageMarkdown: true,
+// Enable with defaults
+perPageMarkdown: true,
 ```
 
-### `markdownFilePattern`
+```js
+// Enable with custom configuration
+perPageMarkdown: {
+	extensionStrategy: 'replace',
+	excludePages: ['404', 'index*'],
+},
+```
+
+#### `perPageMarkdown.extensionStrategy`
 
 **Type:** `'append' | 'replace'`  
 **Default:** `'append'`
 
-File naming pattern for individual Markdown files when `generatePageMarkdown` is enabled.
+File naming pattern for the generated Markdown files.
 
-- `'append'`: Adds `.md` to the existing URL (e.g., `/docs/getting-started` → `/docs/getting-started.md` and `/docs/getting-started.html.md`)
-- `'replace'`: Replaces the extension with `.md` (e.g., `/docs/getting-started` → `/docs/getting-started.md`)
+- `'append'`: Adds `.md` to the existing URL (e.g., `/docs/getting-started` → `/docs/getting-started.html.md`).
+- `'replace'`: Replaces the extension with `.md` (e.g., `/docs/getting-started` → `/docs/getting-started.md`).
 
-```js
-markdownFilePattern: 'replace',
-```
-
-### `excludePages`
+#### `perPageMarkdown.excludePages`
 
 **Type:** `string[]`  
-**Default:** `['404', 'search']`
+**Default:** `['404']`
 
-Page IDs to exclude from individual .md file generation when `generatePageMarkdown` is enabled. 
-Supports glob patterns processed using [`micromatch`'s matching features](https://github.com/micromatch/micromatch#matching-features).
+An array of page IDs to exclude from per-page Markdown generation.
+Supports glob patterns processed using [`micromatch`'s matching features](https://github.com/micromatch/micromatch#matching-features);
+for example, `['index*']` excludes all pages whose IDs start with `index`.
 
 ```js
-excludePages: ['404', 'search', 'admin/**'],
+excludePages: ['404', 'index*', 'admin/**'],
 ```

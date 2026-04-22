@@ -40,8 +40,12 @@ export default defineConfig({
 					// Exclude landing page from llms-small.txt
 					exclude: ['index'],
 					pageSeparator: `\n\n\n`,
-					// Enable individual markdown file generation
-					perPageMarkdown: true
+					// Enable individual markdown file generation; exclude the landing page
+					// to demonstrate the glob-capable excludePages option.
+					perPageMarkdown: {
+						extensionStrategy: 'append',
+						excludePages: ['index*'],
+					},
 				}),
 			],
 			sidebar: ['getting-started', 'configuration'],
