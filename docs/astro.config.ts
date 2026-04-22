@@ -1,9 +1,9 @@
 import starlight from '@astrojs/starlight';
 import { defineConfig } from 'astro/config';
-import starlightLlmsTxt from 'starlight-llms-txt';
+import starlightLlmsTxt from '@f5xc-salesdemos/starlight-llms-txt';
 
 export default defineConfig({
-	site: 'https://delucis.github.io',
+	site: 'https://f5xc-salesdemos.github.io',
 	base: '/starlight-llms-txt',
 	integrations: [
 		starlight({
@@ -13,17 +13,18 @@ export default defineConfig({
 				{
 					icon: 'github',
 					label: 'GitHub repository',
-					href: 'https://github.com/delucis/starlight-llms-txt',
+					href: 'https://github.com/f5xc-salesdemos/starlight-llms-txt',
 				},
 			],
 			editLink: {
-				baseUrl: 'https://github.com/delucis/starlight-llms-txt/edit/main/docs/',
+				baseUrl: 'https://github.com/f5xc-salesdemos/starlight-llms-txt/edit/main/docs/',
 			},
 			lastUpdated: true,
 			plugins: [
 				starlightLlmsTxt({
 					description:
 						'starlight-llms-txt is a plugin for the Starlight documentation website framework that auto-generates llms.txt context files for large language models based on a documentation site’s content.',
+					sidebarNav: true,
 					optionalLinks: [
 						{
 							label: 'The /llms.txt file',
@@ -39,6 +40,12 @@ export default defineConfig({
 					// Exclude landing page from llms-small.txt
 					exclude: ['index'],
 					pageSeparator: `\n\n\n`,
+					// Enable individual markdown file generation; exclude the landing page
+					// to demonstrate the glob-capable excludePages option.
+					perPageMarkdown: {
+						extensionStrategy: 'append',
+						excludePages: ['index*'],
+					},
 				}),
 			],
 			sidebar: ['getting-started', 'configuration'],

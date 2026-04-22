@@ -1,6 +1,7 @@
 import type { StarlightPlugin } from '@astrojs/starlight/types';
 import { AstroError } from 'astro/errors';
 import GithubSlugger from 'github-slugger';
+import { resolvePerPageMarkdownOptions } from './per-page-markdown-utils';
 import type { ProjectContext, StarlightLllmsTextOptions } from './types';
 
 export default function starlightLlmsTxt(opts: StarlightLllmsTextOptions = {}): StarlightPlugin {
@@ -39,6 +40,18 @@ export default function starlightLlmsTxt(opts: StarlightLllmsTextOptions = {}): 
 								prerender: true,
 							});
 
+							// Parse perPageMarkdown config
+							const perPageMarkdownConfig = resolvePerPageMarkdownOptions(opts.perPageMarkdown);
+
+							// Inject the individual page Markdown route if enabled
+							if (perPageMarkdownConfig.enabled) {
+								injectRoute({
+									entrypoint: new URL('./page-markdown.ts', import.meta.url),
+									pattern: '/[...slug].md',
+									prerender: true,
+								});
+							}
+
 							const slugger = new GithubSlugger();
 							const projectContext: ProjectContext = {
 								base: astroConfig.base,
@@ -58,6 +71,9 @@ export default function starlightLlmsTxt(opts: StarlightLllmsTextOptions = {}): 
 								locales: config.locales,
 								pageSeparator: opts.pageSeparator ?? '\n\n',
 								rawContent: opts.rawContent ?? false,
+								sidebarNav: opts.sidebarNav ?? false,
+								federatedSites: opts.federatedSites ?? [],
+								perPageMarkdown: perPageMarkdownConfig,
 							};
 
 							const modules = {

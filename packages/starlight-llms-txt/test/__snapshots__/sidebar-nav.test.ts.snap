@@ -1,0 +1,14 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`renderSectionTree > matches the xcsh#223 reference output 1`] = `
+"## Sections
+
+- [Overview](https://f5xc-salesdemos.github.io/csd/overview/): Product overview and architecture
+- [Demo](https://f5xc-salesdemos.github.io/csd/demo/): 4-phase demo exercise
+  - [Phase 1 — Build](https://f5xc-salesdemos.github.io/csd/demo/phase-1-build/): Deploy infrastructure via API
+  - [Phase 2 — Attack](https://f5xc-salesdemos.github.io/csd/demo/phase-2-attack/): Simulated attack traffic
+  - [Phase 3 — Mitigate](https://f5xc-salesdemos.github.io/csd/demo/phase-3-mitigate/): Apply and verify mitigations
+  - [Phase 4 — Teardown](https://f5xc-salesdemos.github.io/csd/demo/phase-4-teardown/): Clean up demo objects
+- [API Reference](https://f5xc-salesdemos.github.io/csd/api-reference/): REST API endpoints
+- [FAQ](https://f5xc-salesdemos.github.io/csd/faq/): Common questions"
+`;

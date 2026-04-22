@@ -19,7 +19,8 @@
 	"scripts": {
 		"build:docs": "pnpm -F starlight-llms-txt-docs build",
 		"ci-version": "changeset version && pnpm install --no-frozen-lockfile",
-		"ci-publish": "changeset publish"
+		"ci-publish": "changeset publish",
+		"test": "pnpm --filter @f5xc-salesdemos/starlight-llms-txt test"
 	},
 	"dependencies": {
 		"@changesets/changelog-github": "^0.6.0",

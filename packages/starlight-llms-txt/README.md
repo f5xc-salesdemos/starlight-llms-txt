@@ -1,13 +1,19 @@
-# `starlight-llms-txt`
+# @f5xc-salesdemos/starlight-llms-txt
 
-Generate `llms.txt` files to train large language models on your Starlight documentation website.
+Fork of [`starlight-llms-txt`](https://github.com/delucis/starlight-llms-txt) by Chris Swithinbank, extended for the [f5xc-salesdemos](https://github.com/f5xc-salesdemos) documentation federation.
 
-## Documentation
+## Additions over upstream
 
-Ready to get started?
+- `perPageMarkdown` — per-page `.md` endpoints
+- `sidebarNav` — sidebar hierarchy in `llms.txt`, with frontmatter descriptions inlined automatically
+- `federatedSites` — cross-repo links for federated doc portals
 
-Check out the [`starlight-llms-txt` documentation site](https://delucis.github.io/starlight-llms-txt/).
+See the [configuration docs](https://f5xc-salesdemos.github.io/starlight-llms-txt/configuration/) for the full option reference.
+
+## Relationship to upstream
+
+Compatible features are intended to land upstream at `delucis/starlight-llms-txt` after production validation. Until then, this package tracks the f5xc-salesdemos integration needs.
 
 ## License
 
-[MIT](https://github.com/delucis/starlight-llms-txt/blob/main/LICENSE)
+MIT — copyright Chris Swithinbank, fork modifications by f5xc-salesdemos contributors.

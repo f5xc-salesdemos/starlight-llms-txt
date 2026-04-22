@@ -249,3 +249,96 @@ The separator used when concatenating page entries together.
 ```ts
 pageSeparator: '\n----------\n',
 ```
+
+### `sidebarNav`
+
+**Type:** `boolean`  
+**Default:** `false`
+
+When enabled, `llms.txt` includes a `## Sections` block listing the site's pages in hierarchical order. Pages are grouped by first path segment (e.g. `demo/phase-1-build` under a `demo` group). If a group has an index page (`demo/index.mdx`), its frontmatter title and description are used for the group heading; otherwise the path segment is title-cased.
+
+Each entry's `description` (from frontmatter) is appended automatically when present:
+
+````md
+## Sections
+
+- [Overview](https://example.com/overview/): Product overview and architecture
+- [Demo](https://example.com/demo/): 4-phase demo exercise
+  - [Phase 1 — Build](https://example.com/demo/phase-1-build/): Deploy infrastructure via API
+````
+
+Respects the [`promote`](#promote) and [`demote`](#demote) options for ordering. Draft pages and non-default locales are excluded.
+
+### `federatedSites`
+
+**Type:** `Array<{ label: string; url: string; description?: string }>`  
+**Default:** `[]`
+
+An array of links to other sites' `llms.txt` entry points. Use this on a docs portal to federate out to product-specific documentation. Empty array (the default) omits the block entirely, so leaf product sites don't need conditional config.
+
+TS config example:
+
+````ts
+federatedSites: [
+	{ label: 'WAF', url: 'https://example.com/waf/llms.txt', description: 'Web application firewall' },
+	{ label: 'CSD', url: 'https://example.com/csd/llms.txt', description: 'Client-side defense' },
+]
+````
+
+Output:
+
+````md
+## Federated Sites
+
+- [WAF](https://example.com/waf/llms.txt): Web application firewall
+- [CSD](https://example.com/csd/llms.txt): Client-side defense
+````
+
+The block is placed between `## Sections` and `## Notes` — local navigation before cross-site traversal.
+
+### `perPageMarkdown`
+
+**Type:** `boolean | { extensionStrategy?: 'append' | 'replace'; excludePages?: string[] }`  
+**Default:** `false`
+
+Enable generation of individual Markdown (`.md`) files for each documentation page.
+This implements the second part of the [llmstxt.org standard proposal](https://llmstxt.org/#proposal),
+allowing LLMs to fetch specific documentation pages on-demand rather than processing the entire documentation.
+
+Set to `true` to enable with defaults, or pass an object for advanced configuration.
+
+```js
+// Enable with defaults
+perPageMarkdown: true,
+```
+
+```js
+// Enable with custom configuration
+perPageMarkdown: {
+	extensionStrategy: 'replace',
+	excludePages: ['404', 'index*'],
+},
+```
+
+#### `perPageMarkdown.extensionStrategy`
+
+**Type:** `'append' | 'replace'`  
+**Default:** `'append'`
+
+File naming pattern for the generated Markdown files.
+
+- `'append'`: Adds `.md` to the existing URL (e.g., `/docs/getting-started` → `/docs/getting-started.html.md`).
+- `'replace'`: Replaces the extension with `.md` (e.g., `/docs/getting-started` → `/docs/getting-started.md`).
+
+#### `perPageMarkdown.excludePages`
+
+**Type:** `string[]`  
+**Default:** `['404']`
+
+An array of page IDs to exclude from per-page Markdown generation.
+Supports glob patterns processed using [`micromatch`'s matching features](https://github.com/micromatch/micromatch#matching-features);
+for example, `['index*']` excludes all pages whose IDs start with `index`.
+
+```js
+excludePages: ['404', 'index*', 'admin/**'],
+```

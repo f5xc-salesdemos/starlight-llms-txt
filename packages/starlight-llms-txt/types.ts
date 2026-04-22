@@ -1,5 +1,6 @@
 import type { StarlightUserConfig } from '@astrojs/starlight/types';
 import type { AstroConfig } from 'astro';
+import type { PerPageMarkdownConfig } from './per-page-markdown-utils';
 
 interface CustomSetUserConfig {
 	/** Label for this subset of documentation, e.g. `"Tutorial"` */
@@ -30,6 +31,9 @@ export interface ProjectContext {
 	exclude: NonNullable<StarlightLllmsTextOptions['exclude']>;
 	pageSeparator: NonNullable<StarlightLllmsTextOptions['pageSeparator']>;
 	rawContent: NonNullable<StarlightLllmsTextOptions['rawContent']>;
+	sidebarNav: NonNullable<StarlightLllmsTextOptions['sidebarNav']>;
+	federatedSites: NonNullable<StarlightLllmsTextOptions['federatedSites']>;
+	perPageMarkdown: PerPageMarkdownConfig;
 }
 
 /** Plugin user options. */
@@ -184,4 +188,79 @@ export interface StarlightLllmsTextOptions {
 	 * @default false
 	 */
 	rawContent?: boolean;
+
+	/**
+	 * When enabled, generate a `## Sections` block in `llms.txt` listing the site's pages
+	 * in hierarchical order. Pages are grouped by first path segment (e.g. `demo/phase-1-build`
+	 * under a `demo` group). If a group has an index page (`demo/index`), its frontmatter is
+	 * used for the group heading; otherwise the segment is title-cased. Each entry's
+	 * `description` (from frontmatter) is appended automatically when present.
+	 *
+	 * Respects the `promote` and `demote` options for ordering. Draft pages and non-default
+	 * locales are excluded.
+	 *
+	 * @default false
+	 */
+	sidebarNav?: boolean;
+
+	/**
+	 * An array of links to other sites' `llms.txt` entry points — used by a docs portal
+	 * to federate out to product-specific documentation.
+	 *
+	 * Rendered as a `## Federated Sites` block in `llms.txt`, placed after `## Sections`
+	 * and before `## Notes`. If the array is empty (the default), the block is omitted
+	 * entirely, so leaf product sites don't need conditional config.
+	 *
+	 * @default []
+	 * @example
+	 * federatedSites: [
+	 *   { label: 'WAF', url: 'https://example.com/waf/llms.txt', description: 'Web application firewall' },
+	 *   { label: 'CSD', url: 'https://example.com/csd/llms.txt', description: 'Client-side defense' },
+	 * ]
+	 */
+	federatedSites?: Array<{
+		label: string;
+		url: string;
+		description?: string;
+	}>;
+
+	/**
+	 * Enable generation of individual Markdown (.md) files for each documentation page.
+	 * This implements the second part of the llmstxt.org standard proposal.
+	 *
+	 * Can be set to `true` to enable with defaults, or an object for advanced configuration.
+	 *
+	 * @default false
+	 *
+	 * @example
+	 * // Enable with defaults
+	 * perPageMarkdown: true
+	 *
+	 * @example
+	 * // Enable with custom configuration
+	 * perPageMarkdown: {
+	 *   extensionStrategy: 'replace',
+	 *   excludePages: ['404', 'admin/**'],
+	 * }
+	 */
+	perPageMarkdown?:
+		| boolean
+		| {
+				/**
+				 * File naming pattern for individual Markdown files.
+				 * - 'append': Adds .md to the existing URL (e.g., /docs/getting-started.html.md)
+				 * - 'replace': Replaces the extension with .md (e.g., /docs/getting-started.md)
+				 *
+				 * @default 'append'
+				 */
+				extensionStrategy?: 'append' | 'replace';
+				/**
+				 * Page IDs to exclude from individual .md file generation. Supports glob patterns.
+				 *
+				 * @default ['404']
+				 *
+				 * @example ['404', 'admin/**']
+				 */
+				excludePages?: string[];
+		  };
 }
