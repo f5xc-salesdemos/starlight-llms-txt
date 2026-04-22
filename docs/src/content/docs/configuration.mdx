@@ -268,3 +268,30 @@ Each entry's `description` (from frontmatter) is appended automatically when pre
 ````
 
 Respects the [`promote`](#promote) and [`demote`](#demote) options for ordering. Draft pages and non-default locales are excluded.
+
+### `federatedSites`
+
+**Type:** `Array<{ label: string; url: string; description?: string }>`  
+**Default:** `[]`
+
+An array of links to other sites' `llms.txt` entry points. Use this on a docs portal to federate out to product-specific documentation. Empty array (the default) omits the block entirely, so leaf product sites don't need conditional config.
+
+TS config example:
+
+````ts
+federatedSites: [
+	{ label: 'WAF', url: 'https://example.com/waf/llms.txt', description: 'Web application firewall' },
+	{ label: 'CSD', url: 'https://example.com/csd/llms.txt', description: 'Client-side defense' },
+]
+````
+
+Output:
+
+````md
+## Federated Sites
+
+- [WAF](https://example.com/waf/llms.txt): Web application firewall
+- [CSD](https://example.com/csd/llms.txt): Client-side defense
+````
+
+The block is placed between `## Sections` and `## Notes` — local navigation before cross-site traversal.

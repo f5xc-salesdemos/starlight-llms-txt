@@ -31,6 +31,7 @@ export interface ProjectContext {
 	pageSeparator: NonNullable<StarlightLllmsTextOptions['pageSeparator']>;
 	rawContent: NonNullable<StarlightLllmsTextOptions['rawContent']>;
 	sidebarNav: NonNullable<StarlightLllmsTextOptions['sidebarNav']>;
+	federatedSites: NonNullable<StarlightLllmsTextOptions['federatedSites']>;
 }
 
 /** Plugin user options. */
@@ -199,4 +200,25 @@ export interface StarlightLllmsTextOptions {
 	 * @default false
 	 */
 	sidebarNav?: boolean;
+
+	/**
+	 * An array of links to other sites' `llms.txt` entry points — used by a docs portal
+	 * to federate out to product-specific documentation.
+	 *
+	 * Rendered as a `## Federated Sites` block in `llms.txt`, placed after `## Sections`
+	 * and before `## Notes`. If the array is empty (the default), the block is omitted
+	 * entirely, so leaf product sites don't need conditional config.
+	 *
+	 * @default []
+	 * @example
+	 * federatedSites: [
+	 *   { label: 'WAF', url: 'https://example.com/waf/llms.txt', description: 'Web application firewall' },
+	 *   { label: 'CSD', url: 'https://example.com/csd/llms.txt', description: 'Client-side defense' },
+	 * ]
+	 */
+	federatedSites?: Array<{
+		label: string;
+		url: string;
+		description?: string;
+	}>;
 }

@@ -59,6 +59,7 @@ export default function starlightLlmsTxt(opts: StarlightLllmsTextOptions = {}): 
 								pageSeparator: opts.pageSeparator ?? '\n\n',
 								rawContent: opts.rawContent ?? false,
 								sidebarNav: opts.sidebarNav ?? false,
+								federatedSites: opts.federatedSites ?? [],
 							};
 
 							const modules = {

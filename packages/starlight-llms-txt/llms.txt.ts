@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { starlightLllmsTxtContext } from 'virtual:starlight-llms-txt/context';
 import { buildSectionTree, renderSectionTree } from './sidebar-nav';
+import { renderFederatedSites } from './federated-sites';
 import { ensureTrailingSlash, getSiteTitle, isDefaultLocale } from './utils';
 
 // Explicitly set this to prerender so it works the same way for sites in `server` mode.
@@ -45,6 +46,12 @@ export const GET: APIRoute = async (context) => {
 			starlightLllmsTxtContext.demote
 		);
 		const rendered = renderSectionTree(tree, site);
+		if (rendered) segments.push(rendered);
+	}
+
+	// Federated sites — Tier 1 routing.
+	{
+		const rendered = renderFederatedSites(starlightLllmsTxtContext.federatedSites);
 		if (rendered) segments.push(rendered);
 	}
 
