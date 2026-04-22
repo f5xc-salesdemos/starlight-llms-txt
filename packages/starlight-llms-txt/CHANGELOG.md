@@ -1,5 +1,33 @@
 # starlight-llms-txt
 
+## 1.0.0
+
+### Major Changes
+
+- [#1](https://github.com/f5xc-salesdemos/starlight-llms-txt/pull/1) [`9ef7e93`](https://github.com/f5xc-salesdemos/starlight-llms-txt/commit/9ef7e93d1685e1d5ccc0dd43f0b4de6dded1522f) Thanks [@robinmordasiewicz](https://github.com/robinmordasiewicz)! - Initial release of the F5 XC Sales Demos fork, derived from `starlight-llms-txt@0.8.1`. Adds:
+
+  - `perPageMarkdown` — per-page `.md` endpoints (Tier 4 routing in the xcsh#223 cascading knowledge hierarchy). Rebased from [delucis#32](https://github.com/delucis/starlight-llms-txt/pull/32) by Matthias Vallentin, with `excludePages` extended to accept glob patterns.
+  - `sidebarNav` — sidebar hierarchy in `llms.txt` (Tier 2 routing), with frontmatter descriptions inlined automatically.
+  - `federatedSites` — cross-repo links block in `llms.txt` (Tier 1 routing).
+
+  The `starlight-llms-txt` package is authored by Chris Swithinbank (delucis). This fork exists to ship features needed by the f5xc-salesdemos documentation federation; we intend to upstream compatible features once they have been validated in production.
+
+### Minor Changes
+
+- [#1](https://github.com/f5xc-salesdemos/starlight-llms-txt/pull/1) [`940de8c`](https://github.com/f5xc-salesdemos/starlight-llms-txt/commit/940de8ce11bd6d7124b6e41708c991adc576dc59) Thanks [@robinmordasiewicz](https://github.com/robinmordasiewicz)! - Add `federatedSites` option. When set to a non-empty array, the plugin includes a `## Federated Sites` block in `llms.txt` listing links to other sites' `llms.txt` entry points. Intended for docs portals that federate out to product-specific documentation.
+
+- [#1](https://github.com/f5xc-salesdemos/starlight-llms-txt/pull/1) [`a8e692c`](https://github.com/f5xc-salesdemos/starlight-llms-txt/commit/a8e692c82c96bbfe36d3fc993d2fca4d0d5dc74e) Thanks [@robinmordasiewicz](https://github.com/robinmordasiewicz)! - Add individual Markdown file generation for each documentation page
+
+  Implements the second part of the llmstxt.org standard proposal by generating clean Markdown versions of each documentation page. These individual `.md` files are accessible at the same URL path with `.md` appended, allowing LLMs to fetch specific documentation pages on-demand.
+
+  New configuration option:
+
+  - `perPageMarkdown`: Enable individual page generation. Set to `true` for defaults, or an object for advanced configuration:
+    - `extensionStrategy`: Control URL pattern - `'append'` or `'replace'` (default: `'append'`)
+    - `excludePages`: Exclude specific pages from .md generation (default: `['404']`)
+
+- [#1](https://github.com/f5xc-salesdemos/starlight-llms-txt/pull/1) [`46d0562`](https://github.com/f5xc-salesdemos/starlight-llms-txt/commit/46d0562410dd4ddea05fd6f3b9b4bfb732253891) Thanks [@robinmordasiewicz](https://github.com/robinmordasiewicz)! - Add `sidebarNav` option. When enabled, the plugin includes a `## Sections` block in `llms.txt` with the site's pages grouped hierarchically. Entries include frontmatter descriptions inline when present.
+
 ## 0.8.1
 
 ### Patch Changes
