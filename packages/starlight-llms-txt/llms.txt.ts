@@ -1,6 +1,8 @@
 import type { APIRoute } from 'astro';
+import { getCollection } from 'astro:content';
 import { starlightLllmsTxtContext } from 'virtual:starlight-llms-txt/context';
-import { ensureTrailingSlash, getSiteTitle } from './utils';
+import { buildSectionTree, renderSectionTree } from './sidebar-nav';
+import { ensureTrailingSlash, getSiteTitle, isDefaultLocale } from './utils';
 
 // Explicitly set this to prerender so it works the same way for sites in `server` mode.
 export const prerender = true;
@@ -33,6 +35,18 @@ export const GET: APIRoute = async (context) => {
 			),
 		].join('\n')
 	);
+
+	// Sidebar navigation — Tier 2 routing.
+	if (starlightLllmsTxtContext.sidebarNav) {
+		const docs = await getCollection('docs', (doc) => isDefaultLocale(doc) && !doc.data.draft);
+		const tree = buildSectionTree(
+			docs,
+			starlightLllmsTxtContext.promote,
+			starlightLllmsTxtContext.demote
+		);
+		const rendered = renderSectionTree(tree, site);
+		if (rendered) segments.push(rendered);
+	}
 
 	// Additional notes.
 	segments.push(`## Notes`);

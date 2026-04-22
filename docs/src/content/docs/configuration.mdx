@@ -249,3 +249,22 @@ The separator used when concatenating page entries together.
 ```ts
 pageSeparator: '\n----------\n',
 ```
+
+### `sidebarNav`
+
+**Type:** `boolean`  
+**Default:** `false`
+
+When enabled, `llms.txt` includes a `## Sections` block listing the site's pages in hierarchical order. Pages are grouped by first path segment (e.g. `demo/phase-1-build` under a `demo` group). If a group has an index page (`demo/index.mdx`), its frontmatter title and description are used for the group heading; otherwise the path segment is title-cased.
+
+Each entry's `description` (from frontmatter) is appended automatically when present:
+
+````md
+## Sections
+
+- [Overview](https://example.com/overview/): Product overview and architecture
+- [Demo](https://example.com/demo/): 4-phase demo exercise
+  - [Phase 1 — Build](https://example.com/demo/phase-1-build/): Deploy infrastructure via API
+````
+
+Respects the [`promote`](#promote) and [`demote`](#demote) options for ordering. Draft pages and non-default locales are excluded.

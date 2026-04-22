@@ -30,6 +30,7 @@ export interface ProjectContext {
 	exclude: NonNullable<StarlightLllmsTextOptions['exclude']>;
 	pageSeparator: NonNullable<StarlightLllmsTextOptions['pageSeparator']>;
 	rawContent: NonNullable<StarlightLllmsTextOptions['rawContent']>;
+	sidebarNav: NonNullable<StarlightLllmsTextOptions['sidebarNav']>;
 }
 
 /** Plugin user options. */
@@ -184,4 +185,18 @@ export interface StarlightLllmsTextOptions {
 	 * @default false
 	 */
 	rawContent?: boolean;
+
+	/**
+	 * When enabled, generate a `## Sections` block in `llms.txt` listing the site's pages
+	 * in hierarchical order. Pages are grouped by first path segment (e.g. `demo/phase-1-build`
+	 * under a `demo` group). If a group has an index page (`demo/index`), its frontmatter is
+	 * used for the group heading; otherwise the segment is title-cased. Each entry's
+	 * `description` (from frontmatter) is appended automatically when present.
+	 *
+	 * Respects the `promote` and `demote` options for ordering. Draft pages and non-default
+	 * locales are excluded.
+	 *
+	 * @default false
+	 */
+	sidebarNav?: boolean;
 }
