@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { buildSectionTree } from '../sidebar-nav';
+import { buildSectionTree, renderSectionTree, type SectionNode } from '../sidebar-nav';
 
 type DocFixture = {
 	id: string;
@@ -91,5 +91,97 @@ describe('buildSectionTree', () => {
 			['references*'], // demote
 		);
 		expect(tree.map((n) => n.slug)).toEqual(['zeta', 'alpha', 'references']);
+	});
+});
+
+describe('renderSectionTree', () => {
+	const site = new URL('https://example.com/docs/');
+
+	const node = (
+		title: string,
+		slug: string | undefined,
+		description?: string,
+		children: SectionNode[] = [],
+	): SectionNode => ({ title, slug, description, children });
+
+	it('returns empty string for empty tree', () => {
+		expect(renderSectionTree([], site)).toBe('');
+	});
+
+	it('renders a flat list of linked nodes', () => {
+		const out = renderSectionTree(
+			[node('Overview', 'overview'), node('Configuration', 'configuration')],
+			site,
+		);
+		expect(out).toBe(
+			'## Sections\n' +
+				'\n' +
+				'- [Overview](https://example.com/docs/overview/)\n' +
+				'- [Configuration](https://example.com/docs/configuration/)',
+		);
+	});
+
+	it('appends ": description" when description is present', () => {
+		const out = renderSectionTree(
+			[node('Overview', 'overview', 'Product overview')],
+			site,
+		);
+		expect(out).toBe(
+			'## Sections\n\n- [Overview](https://example.com/docs/overview/): Product overview',
+		);
+	});
+
+	it('omits the colon when description is absent', () => {
+		const out = renderSectionTree([node('Overview', 'overview')], site);
+		expect(out.endsWith('(https://example.com/docs/overview/)')).toBe(true);
+		expect(out).not.toContain('): ');
+	});
+
+	it('renders synthetic groups without a link', () => {
+		const out = renderSectionTree(
+			[node('Demo', undefined, undefined, [node('Phase 1', 'demo/phase-1')])],
+			site,
+		);
+		expect(out).toBe(
+			'## Sections\n' +
+				'\n' +
+				'- Demo\n' +
+				'  - [Phase 1](https://example.com/docs/demo/phase-1/)',
+		);
+	});
+
+	it('renders nested linked groups with descriptions', () => {
+		const out = renderSectionTree(
+			[
+				node('Demo', 'demo', '4-phase demo exercise', [
+					node('Phase 1 — Build', 'demo/phase-1-build', 'Deploy infrastructure via API'),
+				]),
+			],
+			site,
+		);
+		expect(out).toBe(
+			'## Sections\n' +
+				'\n' +
+				'- [Demo](https://example.com/docs/demo/): 4-phase demo exercise\n' +
+				'  - [Phase 1 — Build](https://example.com/docs/demo/phase-1-build/): Deploy infrastructure via API',
+		);
+	});
+
+	it('matches the xcsh#223 reference output', () => {
+		const out = renderSectionTree(
+			[
+				node('Overview', 'overview', 'Product overview and architecture'),
+				node('Demo', 'demo', '4-phase demo exercise', [
+					node('Phase 1 — Build', 'demo/phase-1-build', 'Deploy infrastructure via API'),
+					node('Phase 2 — Attack', 'demo/phase-2-attack', 'Simulated attack traffic'),
+					node('Phase 3 — Mitigate', 'demo/phase-3-mitigate', 'Apply and verify mitigations'),
+					node('Phase 4 — Teardown', 'demo/phase-4-teardown', 'Clean up demo objects'),
+				]),
+				node('API Reference', 'api-reference', 'REST API endpoints'),
+				node('FAQ', 'faq', 'Common questions'),
+			],
+			new URL('https://f5xc-salesdemos.github.io/csd/'),
+		);
+		expect(out).toMatchSnapshot();
 	});
 });

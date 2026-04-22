@@ -99,3 +99,29 @@ export function buildSectionTree(
 
 	return result;
 }
+
+export function renderSectionTree(tree: SectionNode[], site: URL): string {
+	if (tree.length === 0) return '';
+
+	const lines: string[] = ['## Sections', ''];
+
+	function renderNode(node: SectionNode, depth: number): void {
+		const indent = '  '.repeat(depth);
+		const descSuffix = node.description ? `: ${node.description}` : '';
+		if (node.slug !== undefined) {
+			const url = new URL(`./${node.slug}/`, site);
+			lines.push(`${indent}- [${node.title}](${url})${descSuffix}`);
+		} else {
+			lines.push(`${indent}- ${node.title}${descSuffix}`);
+		}
+		for (const child of node.children) {
+			renderNode(child, depth + 1);
+		}
+	}
+
+	for (const node of tree) {
+		renderNode(node, 0);
+	}
+
+	return lines.join('\n');
+}
