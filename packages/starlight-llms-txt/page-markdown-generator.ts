@@ -1,9 +1,9 @@
 import type { APIContext } from 'astro';
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
-import micromatch from 'micromatch';
 import { starlightLllmsTxtContext } from 'virtual:starlight-llms-txt/context';
 import { entryToSimpleMarkdown } from './entryToSimpleMarkdown';
+import { shouldExcludePage } from './per-page-markdown-utils';
 import { isDefaultLocale } from './utils';
 
 /**
@@ -50,6 +50,6 @@ export async function getAllPages(): Promise<CollectionEntry<'docs'>[]> {
 		(doc) =>
 			isDefaultLocale(doc) &&
 			!doc.data.draft &&
-			!micromatch.isMatch(doc.id, starlightLllmsTxtContext.perPageMarkdown.excludePages)
+			!shouldExcludePage(doc.id, starlightLllmsTxtContext.perPageMarkdown.excludePages)
 	);
 }

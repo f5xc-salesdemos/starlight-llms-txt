@@ -7,6 +7,7 @@ import type {
 import type { CollectionEntry } from 'astro:content';
 import { starlightLllmsTxtContext } from 'virtual:starlight-llms-txt/context';
 import { generatePageMarkdown, getAllPages } from './page-markdown-generator';
+import { slugToPath } from './per-page-markdown-utils';
 
 export const getStaticPaths = (async () => {
 	const { perPageMarkdown } = starlightLllmsTxtContext;
@@ -16,41 +17,14 @@ export const getStaticPaths = (async () => {
 		return [];
 	}
 
-	// Get all pages
+	// Get all pages (already filtered by excludePages inside getAllPages).
 	const pages = await getAllPages();
 
 	// Generate paths based on the file pattern
-	const paths = pages.flatMap((doc) => {
-		const slug = doc.id;
-
-		// Handle different URL patterns
-		if (perPageMarkdown.extensionStrategy === 'replace') {
-			// Simple .md replacement pattern
-			return [
-				{
-					params: { slug },
-					props: { doc },
-				},
-			];
-		} else {
-			// 'append' pattern - add .html.md
-			if (slug === 'index') {
-				return [
-					{
-						params: { slug: 'index.html' },
-						props: { doc },
-					},
-				];
-			} else {
-				return [
-					{
-						params: { slug: `${slug}.html` },
-						props: { doc },
-					},
-				];
-			}
-		}
-	});
+	const paths = pages.map((doc) => ({
+		params: { slug: slugToPath(doc.id, perPageMarkdown.extensionStrategy) },
+		props: { doc },
+	}));
 
 	return paths;
 }) satisfies GetStaticPaths;

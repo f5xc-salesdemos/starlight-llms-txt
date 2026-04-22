@@ -1,5 +1,6 @@
 import type { StarlightUserConfig } from '@astrojs/starlight/types';
 import type { AstroConfig } from 'astro';
+import type { PerPageMarkdownConfig } from './per-page-markdown-utils';
 
 interface CustomSetUserConfig {
 	/** Label for this subset of documentation, e.g. `"Tutorial"` */
@@ -32,11 +33,7 @@ export interface ProjectContext {
 	rawContent: NonNullable<StarlightLllmsTextOptions['rawContent']>;
 	sidebarNav: NonNullable<StarlightLllmsTextOptions['sidebarNav']>;
 	federatedSites: NonNullable<StarlightLllmsTextOptions['federatedSites']>;
-	perPageMarkdown: {
-		enabled: boolean;
-		extensionStrategy: 'append' | 'replace';
-		excludePages: string[];
-	};
+	perPageMarkdown: PerPageMarkdownConfig;
 }
 
 /** Plugin user options. */

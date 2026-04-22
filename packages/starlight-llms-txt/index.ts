@@ -1,6 +1,7 @@
 import type { StarlightPlugin } from '@astrojs/starlight/types';
 import { AstroError } from 'astro/errors';
 import GithubSlugger from 'github-slugger';
+import { resolvePerPageMarkdownOptions } from './per-page-markdown-utils';
 import type { ProjectContext, StarlightLllmsTextOptions } from './types';
 
 export default function starlightLlmsTxt(opts: StarlightLllmsTextOptions = {}): StarlightPlugin {
@@ -40,19 +41,7 @@ export default function starlightLlmsTxt(opts: StarlightLllmsTextOptions = {}): 
 							});
 
 							// Parse perPageMarkdown config
-							const perPageMarkdownConfig = (() => {
-								if (!opts.perPageMarkdown) {
-									return { enabled: false, extensionStrategy: 'append' as const, excludePages: ['404'] };
-								}
-								if (opts.perPageMarkdown === true) {
-									return { enabled: true, extensionStrategy: 'append' as const, excludePages: ['404'] };
-								}
-								return {
-									enabled: true,
-									extensionStrategy: opts.perPageMarkdown.extensionStrategy ?? 'append',
-									excludePages: opts.perPageMarkdown.excludePages ?? ['404'],
-								};
-							})();
+							const perPageMarkdownConfig = resolvePerPageMarkdownOptions(opts.perPageMarkdown);
 
 							// Inject the individual page Markdown route if enabled
 							if (perPageMarkdownConfig.enabled) {
