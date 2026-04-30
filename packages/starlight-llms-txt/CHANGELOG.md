@@ -1,5 +1,11 @@
 # starlight-llms-txt
 
+## 1.1.0
+
+### Minor Changes
+
+- [#3](https://github.com/f5xc-salesdemos/starlight-llms-txt/pull/3) [`c59c96d`](https://github.com/f5xc-salesdemos/starlight-llms-txt/commit/c59c96d3a3569552c3b70dec2cbf253d2bc9ccaa) Thanks [@robinmordasiewicz](https://github.com/robinmordasiewicz)! - Add categorized federation support. Federated sites can now be grouped by category with optional section headings and descriptions. Fully backwards-compatible — when no categories are defined, rendering is unchanged.
+
 ## 1.0.0
 
 ### Major Changes
