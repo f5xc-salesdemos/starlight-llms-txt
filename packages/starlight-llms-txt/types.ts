@@ -15,6 +15,15 @@ interface CustomSet extends CustomSetUserConfig {
 	slug: string;
 }
 
+interface FederatedSiteCategoryUserConfig {
+	/** Unique identifier for this category, e.g. `"lab-infrastructure"` */
+	id: string;
+	/** Human-readable heading rendered as a `## {label}` section in llms.txt */
+	label: string;
+	/** Optional description rendered below the section heading */
+	description?: string;
+}
+
 /** Project configuration metadata passed from the integration to the routes in a virtual module. */
 export interface ProjectContext {
 	base: AstroConfig['base'];
@@ -33,6 +42,7 @@ export interface ProjectContext {
 	rawContent: NonNullable<StarlightLllmsTextOptions['rawContent']>;
 	sidebarNav: NonNullable<StarlightLllmsTextOptions['sidebarNav']>;
 	federatedSites: NonNullable<StarlightLllmsTextOptions['federatedSites']>;
+	federatedSiteCategories: NonNullable<StarlightLllmsTextOptions['federatedSiteCategories']>;
 	perPageMarkdown: PerPageMarkdownConfig;
 }
 
@@ -222,7 +232,29 @@ export interface StarlightLllmsTextOptions {
 		label: string;
 		url: string;
 		description?: string;
+		/** Category ID matching a `federatedSiteCategories` entry. Sites without a category render under "Other". */
+		category?: string;
 	}>;
+
+	/**
+	 * Define category groups for federated sites. When provided, federated sites
+	 * are grouped by category and rendered as separate `##` sections instead of
+	 * a single `## Federated Sites` block.
+	 *
+	 * Sites whose `category` does not match any ID, or sites without a `category`,
+	 * are rendered under `## Other`.
+	 *
+	 * If omitted, all federated sites render in a single `## Federated Sites` section
+	 * (backwards-compatible).
+	 *
+	 * @default undefined
+	 * @example
+	 * federatedSiteCategories: [
+	 *   { id: 'lab-infrastructure', label: 'Lab Infrastructure', description: 'Deployable Azure VM components' },
+	 *   { id: 'product-features', label: 'Product Features' },
+	 * ]
+	 */
+	federatedSiteCategories?: Array<FederatedSiteCategoryUserConfig>;
 
 	/**
 	 * Enable generation of individual Markdown (.md) files for each documentation page.
