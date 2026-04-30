@@ -51,7 +51,10 @@ export const GET: APIRoute = async (context) => {
 
 	// Federated sites — Tier 1 routing.
 	{
-		const rendered = renderFederatedSites(starlightLllmsTxtContext.federatedSites);
+		const rendered = renderFederatedSites(
+			starlightLllmsTxtContext.federatedSites,
+			starlightLllmsTxtContext.federatedSiteCategories
+		);
 		if (rendered) segments.push(rendered);
 	}
 

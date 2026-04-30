@@ -73,6 +73,7 @@ export default function starlightLlmsTxt(opts: StarlightLllmsTextOptions = {}): 
 								rawContent: opts.rawContent ?? false,
 								sidebarNav: opts.sidebarNav ?? false,
 								federatedSites: opts.federatedSites ?? [],
+								federatedSiteCategories: opts.federatedSiteCategories ?? [],
 								perPageMarkdown: perPageMarkdownConfig,
 							};
 
