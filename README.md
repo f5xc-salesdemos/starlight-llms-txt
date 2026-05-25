@@ -1,15 +1,29 @@
-# `starlight-llms-txt`
+# Starlight Llms Txt
 
-Generate `llms.txt` files to train large language models on your Starlight documentation website
+[![GitHub Pages Deploy](https://github.com/f5xc-salesdemos/starlight-llms-txt/actions/workflows/github-pages-deploy.yml/badge.svg)](https://github.com/f5xc-salesdemos/starlight-llms-txt/actions/workflows/github-pages-deploy.yml)
+[![Repository Settings](https://github.com/f5xc-salesdemos/starlight-llms-txt/actions/workflows/enforce-repo-settings.yml/badge.svg)](https://github.com/f5xc-salesdemos/starlight-llms-txt/actions/workflows/enforce-repo-settings.yml)
+[![License](https://img.shields.io/github/license/f5xc-salesdemos/starlight-llms-txt)](LICENSE)
 
-## Package
+Generate llms.txt files to train large language models on your Starlight documentation website
 
-If you are looking for the Starlight plugin package, you can find it in the [`packages/starlight-llms-txt/`](/packages/starlight-llms-txt/) directory.
+## Documentation
 
-## Project structure
+Full documentation is available at **[https://f5xc-salesdemos.github.io/starlight-llms-txt/](https://f5xc-salesdemos.github.io/starlight-llms-txt/)**.
 
-This project uses pnpm workspaces to develop a single Starlight plugin from the `packages/starlight-llms-txt/` directory. A Starlight documentation site is also available in the `docs/` directory that is used for testing and demonstrating the Starlight plugin.
+## Getting Started
+
+```bash
+git clone https://github.com/f5xc-salesdemos/starlight-llms-txt.git
+```
+
+See the [documentation](https://f5xc-salesdemos.github.io/starlight-llms-txt/) for detailed setup
+and usage guides.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for workflow rules,
+branch naming, and CI requirements.
 
 ## License
 
-[MIT](/LICENSE)
+See [LICENSE](LICENSE).
