@@ -2,27 +2,27 @@
  * Pure helpers for the `perPageMarkdown` option. Extracted for unit testability.
  */
 
-import micromatch from 'micromatch';
+import micromatch from "micromatch";
 
 export interface PerPageMarkdownConfig {
 	enabled: boolean;
-	extensionStrategy: 'append' | 'replace';
+	extensionStrategy: "append" | "replace";
 	excludePages: string[];
 }
 
 export type PerPageMarkdownUserOption =
 	| boolean
 	| {
-			extensionStrategy?: 'append' | 'replace';
+			extensionStrategy?: "append" | "replace";
 			excludePages?: string[];
 	  };
 
-const DEFAULT_EXTENSION_STRATEGY: 'append' | 'replace' = 'append';
-const DEFAULT_EXCLUDE_PAGES: readonly string[] = ['404'];
+const DEFAULT_EXTENSION_STRATEGY: "append" | "replace" = "append";
+const DEFAULT_EXCLUDE_PAGES: readonly string[] = ["404"];
 
 /** Resolve the user-supplied `perPageMarkdown` option into a fully-populated config. */
 export function resolvePerPageMarkdownOptions(
-	option: PerPageMarkdownUserOption | undefined
+	option: PerPageMarkdownUserOption | undefined,
 ): PerPageMarkdownConfig {
 	if (option === undefined || option === false) {
 		return {
@@ -54,8 +54,11 @@ export function resolvePerPageMarkdownOptions(
  * The trailing `.md` is supplied by the Astro route pattern itself, so this
  * helper returns the slug portion only.
  */
-export function slugToPath(slug: string, strategy: 'append' | 'replace'): string {
-	return strategy === 'append' ? `${slug}.html` : slug;
+export function slugToPath(
+	slug: string,
+	strategy: "append" | "replace",
+): string {
+	return strategy === "append" ? `${slug}.html` : slug;
 }
 
 /** Return true if `id` matches any of the exclusion patterns (micromatch globs). */

@@ -13,28 +13,28 @@ export interface FederatedSiteCategory {
 
 function renderSiteList(sites: FederatedSite[]): string[] {
 	return sites.map((site) => {
-		const desc = site.description ? `: ${site.description}` : '';
+		const desc = site.description ? `: ${site.description}` : "";
 		return `- [${site.label}](${site.url})${desc}`;
 	});
 }
 
 export function renderFederatedSites(
 	sites: FederatedSite[],
-	categories?: FederatedSiteCategory[]
+	categories?: FederatedSiteCategory[],
 ): string {
-	if (sites.length === 0) return '';
+	if (sites.length === 0) return "";
 
 	if (!categories || categories.length === 0) {
-		const lines: string[] = ['## Federated Sites', ''];
+		const lines: string[] = ["## Federated Sites", ""];
 		lines.push(...renderSiteList(sites));
-		return lines.join('\n');
+		return lines.join("\n");
 	}
 
 	const sections: string[] = [];
 	const sitesByCategory = new Map<string, FederatedSite[]>();
 
 	for (const site of sites) {
-		const key = site.category || '__uncategorized__';
+		const key = site.category || "__uncategorized__";
 		const list = sitesByCategory.get(key) || [];
 		list.push(site);
 		sitesByCategory.set(key, list);
@@ -45,23 +45,23 @@ export function renderFederatedSites(
 		if (!catSites || catSites.length === 0) continue;
 		const lines: string[] = [`## ${cat.label}`];
 		if (cat.description) lines.push(cat.description);
-		lines.push('');
+		lines.push("");
 		lines.push(...renderSiteList(catSites));
-		sections.push(lines.join('\n'));
+		sections.push(lines.join("\n"));
 		sitesByCategory.delete(cat.id);
 	}
 
-	const uncategorized = sitesByCategory.get('__uncategorized__') || [];
+	const uncategorized = sitesByCategory.get("__uncategorized__") || [];
 	const remaining = Array.from(sitesByCategory.entries())
-		.filter(([key]) => key !== '__uncategorized__')
+		.filter(([key]) => key !== "__uncategorized__")
 		.flatMap(([, s]) => s);
 	const otherSites = [...remaining, ...uncategorized];
 
 	if (otherSites.length > 0) {
-		const lines: string[] = ['## Other', ''];
+		const lines: string[] = ["## Other", ""];
 		lines.push(...renderSiteList(otherSites));
-		sections.push(lines.join('\n'));
+		sections.push(lines.join("\n"));
 	}
 
-	return sections.join('\n\n');
+	return sections.join("\n\n");
 }

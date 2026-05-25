@@ -1,6 +1,9 @@
 {
 	"$schema": "https://unpkg.com/@changesets/config@3.0.3/schema.json",
-	"changelog": ["@changesets/changelog-github", { "repo": "f5xc-salesdemos/starlight-llms-txt" }],
+	"changelog": [
+		"@changesets/changelog-github",
+		{ "repo": "f5xc-salesdemos/starlight-llms-txt" }
+	],
 	"commit": false,
 	"fixed": [],
 	"linked": [],

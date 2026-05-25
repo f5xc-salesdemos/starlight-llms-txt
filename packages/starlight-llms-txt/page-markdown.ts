@@ -1,13 +1,12 @@
+import { starlightLllmsTxtContext } from "virtual:starlight-llms-txt/context";
 import type {
 	APIRoute,
 	GetStaticPaths,
 	InferGetStaticParamsType,
 	InferGetStaticPropsType,
-} from 'astro';
-import type { CollectionEntry } from 'astro:content';
-import { starlightLllmsTxtContext } from 'virtual:starlight-llms-txt/context';
-import { generatePageMarkdown, getAllPages } from './page-markdown-generator';
-import { slugToPath } from './per-page-markdown-utils';
+} from "astro";
+import { generatePageMarkdown, getAllPages } from "./page-markdown-generator";
+import { slugToPath } from "./per-page-markdown-utils";
 
 export const getStaticPaths = (async () => {
 	const { perPageMarkdown } = starlightLllmsTxtContext;
@@ -42,7 +41,7 @@ export const GET: APIRoute<Props, Params> = async (context) => {
 	// Return the Markdown content with appropriate headers
 	return new Response(content, {
 		headers: {
-			'Content-Type': 'text/plain; charset=utf-8',
+			"Content-Type": "text/plain; charset=utf-8",
 		},
 	});
 };

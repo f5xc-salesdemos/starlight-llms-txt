@@ -1,17 +1,17 @@
-import type { APIContext } from 'astro';
-import type { CollectionEntry } from 'astro:content';
-import { getCollection } from 'astro:content';
-import { starlightLllmsTxtContext } from 'virtual:starlight-llms-txt/context';
-import { entryToSimpleMarkdown } from './entryToSimpleMarkdown';
-import { shouldExcludePage } from './per-page-markdown-utils';
-import { isDefaultLocale } from './utils';
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import { starlightLllmsTxtContext } from "virtual:starlight-llms-txt/context";
+import type { APIContext } from "astro";
+import { entryToSimpleMarkdown } from "./entryToSimpleMarkdown";
+import { shouldExcludePage } from "./per-page-markdown-utils";
+import { isDefaultLocale } from "./utils";
 
 /**
  * Generates Markdown content for a single documentation page.
  */
 export async function generatePageMarkdown(
-	doc: CollectionEntry<'docs'>,
-	context: APIContext
+	doc: CollectionEntry<"docs">,
+	context: APIContext,
 ): Promise<string> {
 	return generateMarkdownForEntry(doc, context);
 }
@@ -20,8 +20,8 @@ export async function generatePageMarkdown(
  * Generates Markdown content for a single collection entry.
  */
 async function generateMarkdownForEntry(
-	doc: CollectionEntry<'docs'>,
-	context: APIContext
+	doc: CollectionEntry<"docs">,
+	context: APIContext,
 ): Promise<string> {
 	const segments: string[] = [];
 
@@ -38,18 +38,21 @@ async function generateMarkdownForEntry(
 	const markdown = await entryToSimpleMarkdown(doc, context, false);
 	segments.push(markdown);
 
-	return segments.join('\n\n');
+	return segments.join("\n\n");
 }
 
 /**
  * Get all documentation pages for static path generation.
  */
-export async function getAllPages(): Promise<CollectionEntry<'docs'>[]> {
+export async function getAllPages(): Promise<CollectionEntry<"docs">[]> {
 	return getCollection(
-		'docs',
+		"docs",
 		(doc) =>
 			isDefaultLocale(doc) &&
 			!doc.data.draft &&
-			!shouldExcludePage(doc.id, starlightLllmsTxtContext.perPageMarkdown.excludePages)
+			!shouldExcludePage(
+				doc.id,
+				starlightLllmsTxtContext.perPageMarkdown.excludePages,
+			),
 	);
 }

@@ -1,53 +1,57 @@
-import type { StarlightPlugin } from '@astrojs/starlight/types';
-import { AstroError } from 'astro/errors';
-import GithubSlugger from 'github-slugger';
-import { resolvePerPageMarkdownOptions } from './per-page-markdown-utils';
-import type { ProjectContext, StarlightLllmsTextOptions } from './types';
+import type { StarlightPlugin } from "@astrojs/starlight/types";
+import { AstroError } from "astro/errors";
+import GithubSlugger from "github-slugger";
+import { resolvePerPageMarkdownOptions } from "./per-page-markdown-utils";
+import type { ProjectContext, StarlightLllmsTextOptions } from "./types";
 
-export default function starlightLlmsTxt(opts: StarlightLllmsTextOptions = {}): StarlightPlugin {
+export default function starlightLlmsTxt(
+	opts: StarlightLllmsTextOptions = {},
+): StarlightPlugin {
 	return {
-		name: 'starlight-llms-txt',
+		name: "starlight-llms-txt",
 		hooks: {
 			setup({ astroConfig, addIntegration, config }) {
 				if (!astroConfig.site) {
 					throw new AstroError(
-						'`site` not set in Astro configuration',
-						'The `starlight-llms-txt` plugin requires setting `site` in your Astro configuration file.'
+						"`site` not set in Astro configuration",
+						"The `starlight-llms-txt` plugin requires setting `site` in your Astro configuration file.",
 					);
 				}
 				addIntegration({
-					name: 'starlight-llms-txt',
+					name: "starlight-llms-txt",
 					hooks: {
-						'astro:config:setup'({ injectRoute, updateConfig }) {
+						"astro:config:setup"({ injectRoute, updateConfig }) {
 							injectRoute({
-								entrypoint: new URL('./llms.txt.ts', import.meta.url),
-								pattern: '/llms.txt',
+								entrypoint: new URL("./llms.txt.ts", import.meta.url),
+								pattern: "/llms.txt",
 								prerender: true,
 							});
 							injectRoute({
-								entrypoint: new URL('./llms-full.txt.ts', import.meta.url),
-								pattern: '/llms-full.txt',
+								entrypoint: new URL("./llms-full.txt.ts", import.meta.url),
+								pattern: "/llms-full.txt",
 								prerender: true,
 							});
 							injectRoute({
-								entrypoint: new URL('./llms-small.txt.ts', import.meta.url),
-								pattern: '/llms-small.txt',
+								entrypoint: new URL("./llms-small.txt.ts", import.meta.url),
+								pattern: "/llms-small.txt",
 								prerender: true,
 							});
 							injectRoute({
-								entrypoint: new URL('./llms-custom.txt.ts', import.meta.url),
-								pattern: '/_llms-txt/[slug].txt',
+								entrypoint: new URL("./llms-custom.txt.ts", import.meta.url),
+								pattern: "/_llms-txt/[slug].txt",
 								prerender: true,
 							});
 
 							// Parse perPageMarkdown config
-							const perPageMarkdownConfig = resolvePerPageMarkdownOptions(opts.perPageMarkdown);
+							const perPageMarkdownConfig = resolvePerPageMarkdownOptions(
+								opts.perPageMarkdown,
+							);
 
 							// Inject the individual page Markdown route if enabled
 							if (perPageMarkdownConfig.enabled) {
 								injectRoute({
-									entrypoint: new URL('./page-markdown.ts', import.meta.url),
-									pattern: '/[...slug].md',
+									entrypoint: new URL("./page-markdown.ts", import.meta.url),
+									pattern: "/[...slug].md",
 									prerender: true,
 								});
 							}
@@ -64,12 +68,12 @@ export default function starlightLlmsTxt(opts: StarlightLllmsTextOptions = {}): 
 									slug: slugger.slug(set.label),
 								})),
 								minify: opts.minify ?? {},
-								promote: opts.promote ?? ['index*'],
+								promote: opts.promote ?? ["index*"],
 								demote: opts.demote ?? [],
 								exclude: opts.exclude ?? [],
 								defaultLocale: config.defaultLocale,
 								locales: config.locales,
-								pageSeparator: opts.pageSeparator ?? '\n\n',
+								pageSeparator: opts.pageSeparator ?? "\n\n",
 								rawContent: opts.rawContent ?? false,
 								sidebarNav: opts.sidebarNav ?? false,
 								federatedSites: opts.federatedSites ?? [],
@@ -78,27 +82,26 @@ export default function starlightLlmsTxt(opts: StarlightLllmsTextOptions = {}): 
 							};
 
 							const modules = {
-								'virtual:starlight-llms-txt/context': `export const starlightLllmsTxtContext = ${JSON.stringify(
-									projectContext
+								"virtual:starlight-llms-txt/context": `export const starlightLllmsTxtContext = ${JSON.stringify(
+									projectContext,
 								)}`,
 							};
 							/** Mapping names prefixed with `\0` to their original form. */
 							const resolutionMap = Object.fromEntries(
-								(Object.keys(modules) as (keyof typeof modules)[]).map((key) => [
-									resolveVirtualModuleId(key),
-									key,
-								])
+								(Object.keys(modules) as (keyof typeof modules)[]).map(
+									(key) => [resolveVirtualModuleId(key), key],
+								),
 							);
 
 							updateConfig({
 								vite: {
 									plugins: [
 										{
-											name: 'vite-plugin-starlight-llms-text',
-											resolveId(id): string | void {
+											name: "vite-plugin-starlight-llms-text",
+											resolveId(id): string | undefined {
 												if (id in modules) return resolveVirtualModuleId(id);
 											},
-											load(id): string | void {
+											load(id): string | undefined {
 												const resolution = resolutionMap[id];
 												if (resolution) return modules[resolution];
 											},

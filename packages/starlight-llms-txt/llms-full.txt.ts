@@ -1,6 +1,6 @@
-import type { APIRoute } from 'astro';
-import { generateLlmsTxt } from './generator';
-import { getSiteTitle } from './utils';
+import type { APIRoute } from "astro";
+import { generateLlmsTxt } from "./generator";
+import { getSiteTitle } from "./utils";
 
 // Explicitly set this to prerender so it works the same way for sites in `server` mode.
 
