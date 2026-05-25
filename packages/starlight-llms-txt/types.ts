@@ -1,6 +1,6 @@
-import type { StarlightUserConfig } from '@astrojs/starlight/types';
-import type { AstroConfig } from 'astro';
-import type { PerPageMarkdownConfig } from './per-page-markdown-utils';
+import type { StarlightUserConfig } from "@astrojs/starlight/types";
+import type { AstroConfig } from "astro";
+import type { PerPageMarkdownConfig } from "./per-page-markdown-utils";
 
 interface CustomSetUserConfig {
 	/** Label for this subset of documentation, e.g. `"Tutorial"` */
@@ -26,23 +26,25 @@ interface FederatedSiteCategoryUserConfig {
 
 /** Project configuration metadata passed from the integration to the routes in a virtual module. */
 export interface ProjectContext {
-	base: AstroConfig['base'];
-	defaultLocale: StarlightUserConfig['defaultLocale'];
-	locales: StarlightUserConfig['locales'];
-	title: StarlightUserConfig['title'];
-	description: StarlightUserConfig['description'];
-	details: StarlightLllmsTextOptions['details'];
-	optionalLinks: NonNullable<StarlightLllmsTextOptions['optionalLinks']>;
+	base: AstroConfig["base"];
+	defaultLocale: StarlightUserConfig["defaultLocale"];
+	locales: StarlightUserConfig["locales"];
+	title: StarlightUserConfig["title"];
+	description: StarlightUserConfig["description"];
+	details: StarlightLllmsTextOptions["details"];
+	optionalLinks: NonNullable<StarlightLllmsTextOptions["optionalLinks"]>;
 	customSets: Array<CustomSet>;
-	minify: NonNullable<StarlightLllmsTextOptions['minify']>;
-	promote: NonNullable<StarlightLllmsTextOptions['promote']>;
-	demote: NonNullable<StarlightLllmsTextOptions['demote']>;
-	exclude: NonNullable<StarlightLllmsTextOptions['exclude']>;
-	pageSeparator: NonNullable<StarlightLllmsTextOptions['pageSeparator']>;
-	rawContent: NonNullable<StarlightLllmsTextOptions['rawContent']>;
-	sidebarNav: NonNullable<StarlightLllmsTextOptions['sidebarNav']>;
-	federatedSites: NonNullable<StarlightLllmsTextOptions['federatedSites']>;
-	federatedSiteCategories: NonNullable<StarlightLllmsTextOptions['federatedSiteCategories']>;
+	minify: NonNullable<StarlightLllmsTextOptions["minify"]>;
+	promote: NonNullable<StarlightLllmsTextOptions["promote"]>;
+	demote: NonNullable<StarlightLllmsTextOptions["demote"]>;
+	exclude: NonNullable<StarlightLllmsTextOptions["exclude"]>;
+	pageSeparator: NonNullable<StarlightLllmsTextOptions["pageSeparator"]>;
+	rawContent: NonNullable<StarlightLllmsTextOptions["rawContent"]>;
+	sidebarNav: NonNullable<StarlightLllmsTextOptions["sidebarNav"]>;
+	federatedSites: NonNullable<StarlightLllmsTextOptions["federatedSites"]>;
+	federatedSiteCategories: NonNullable<
+		StarlightLllmsTextOptions["federatedSiteCategories"]
+	>;
 	perPageMarkdown: PerPageMarkdownConfig;
 }
 
@@ -285,7 +287,7 @@ export interface StarlightLllmsTextOptions {
 				 *
 				 * @default 'append'
 				 */
-				extensionStrategy?: 'append' | 'replace';
+				extensionStrategy?: "append" | "replace";
 				/**
 				 * Page IDs to exclude from individual .md file generation. Supports glob patterns.
 				 *
