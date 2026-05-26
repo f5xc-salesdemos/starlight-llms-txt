@@ -14,14 +14,15 @@ If you don't have one yet, you can follow the ["Getting Started"](https://starli
 
 ## Installation
 
-import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
-import { PackageManagers } from 'starlight-package-managers';
+import { Steps } from '@astrojs/starlight/components';
 
 <Steps>
 
 1. `starlight-llms-txt` is a Starlight [plugin](https://starlight.astro.build/reference/plugins/). Install it by running the following command in your terminal:
 
-   <PackageManagers pkg="starlight-llms-txt" />
+   ```bash
+   npm install starlight-llms-txt
+   ```
 
 2. Configure the plugin in your Starlight [configuration](https://starlight.astro.build/reference/configuration/#plugins) in the `astro.config.mjs` file. A `site` URL is also required if you haven’t already set this:
 
@@ -44,7 +45,9 @@ import { PackageManagers } from 'starlight-package-managers';
 
 3. [Start the development server](https://starlight.astro.build/getting-started/#start-the-development-server):
 
-   <PackageManagers type="run" args="dev" />
+   ```bash
+   npm run dev
+   ```
 
 4. Visit [`localhost:4321/llms.txt`](http://localhost:4321/llms.txt) to preview the plugin in action.
 
