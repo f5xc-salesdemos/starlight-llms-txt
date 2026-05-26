@@ -237,13 +237,32 @@ export function buildSectionTree(docs: DocLike[], promote: string[] = [], demote
   return result;
 }
 
-export function renderSectionTree(tree: SectionNode[], site: URL): string {
+export function renderSectionTree(
+  tree: SectionNode[],
+  site: URL,
+  customSets?: Array<{ label: string; slug: string; description?: string }>,
+): string {
   if (tree.length === 0) return '';
+
+  const setMap = new Map<string, { slug: string; description?: string }>();
+  if (customSets) {
+    for (const s of customSets) {
+      setMap.set(s.label.toLowerCase(), { slug: s.slug, description: s.description });
+    }
+  }
 
   const lines: string[] = ['## Sections', ''];
 
   function renderNode(node: SectionNode, depth: number): void {
     const indent = '  '.repeat(depth);
+    const matched = setMap.get(node.title.toLowerCase());
+    if (matched) {
+      const url = new URL(`./_llms-txt/${matched.slug}.txt`, site);
+      const desc = node.description ?? matched.description;
+      const descSuffix = desc ? `: ${desc}` : '';
+      lines.push(`${indent}- [${node.title}](${url})${descSuffix}`);
+      return;
+    }
     const descSuffix = node.description ? `: ${node.description}` : '';
     if (node.slug !== undefined) {
       const url = new URL(`./${node.slug}/`, site);
