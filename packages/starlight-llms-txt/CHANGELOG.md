@@ -1,5 +1,11 @@
 # starlight-llms-txt
 
+## 1.2.1
+
+### Patch Changes
+
+- [#25](https://github.com/f5xc-salesdemos/starlight-llms-txt/pull/25) [`068535a`](https://github.com/f5xc-salesdemos/starlight-llms-txt/commit/068535ab4d725cc0c9095f0162031c306a0675a3) Thanks [@robinmordasiewicz](https://github.com/robinmordasiewicz)! - Make ## Sections link to custom set \_llms-txt/\*.txt files instead of individual page URLs when a section node matches a custom set label. When sidebarNav is enabled, custom sets are moved from Documentation Sets into Sections to avoid duplication.
+
 ## 1.2.0
 
 ### Minor Changes
