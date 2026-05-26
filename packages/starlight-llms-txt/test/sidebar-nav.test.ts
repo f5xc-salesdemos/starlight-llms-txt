@@ -150,6 +150,74 @@ describe('renderSectionTree', () => {
     );
   });
 
+  describe('with customSets', () => {
+    const sets = [
+      { label: 'Load Balancing', slug: 'load-balancing', description: 'Resources and data sources for Load Balancing' },
+      { label: 'Security', slug: 'security', description: 'Resources and data sources for Security' },
+      { label: 'Guides', slug: 'guides', description: 'Step-by-step guides' },
+    ];
+
+    it('links a matched node to _llms-txt/{slug}.txt instead of its page URL', () => {
+      const out = renderSectionTree([node('Load Balancing', undefined, 'LB resources')], site, sets);
+      expect(out).toBe(
+        '## Sections\n\n- [Load Balancing](https://example.com/docs/_llms-txt/load-balancing.txt): LB resources',
+      );
+    });
+
+    it('suppresses children for a matched node', () => {
+      const lb = node('Load Balancing', undefined, undefined, [
+        node('HTTP Load Balancer', 'resources/http_loadbalancer'),
+        node('Origin Pool', 'resources/origin_pool'),
+      ]);
+      const out = renderSectionTree([lb], site, sets);
+      expect(out).not.toContain('http_loadbalancer');
+      expect(out).not.toContain('origin_pool');
+    });
+
+    it('uses custom set description when node has none', () => {
+      const out = renderSectionTree([node('Security', undefined)], site, sets);
+      expect(out).toContain(': Resources and data sources for Security');
+    });
+
+    it('prefers node description over custom set description', () => {
+      const out = renderSectionTree([node('Security', undefined, 'Node description')], site, sets);
+      expect(out).toContain(': Node description');
+      expect(out).not.toContain('Resources and data sources for Security');
+    });
+
+    it('matches labels case-insensitively', () => {
+      const out = renderSectionTree([node('LOAD BALANCING', undefined)], site, sets);
+      expect(out).toContain('_llms-txt/load-balancing.txt');
+    });
+
+    it('does not affect unmatched nodes (backward compat)', () => {
+      const out = renderSectionTree([node('Demo', 'demo', 'demo section')], site, sets);
+      expect(out).toContain('https://example.com/docs/demo/');
+      expect(out).not.toContain('_llms-txt');
+    });
+
+    it('mixed: matched nodes link to custom sets, unmatched nodes link to pages', () => {
+      const tree = [
+        node('Guides', undefined, 'guides desc', [node('Getting Started', 'guides/getting-started')]),
+        node('Demo', 'demo', 'demo section', [node('Phase 1', 'demo/phase-1')]),
+      ];
+      const out = renderSectionTree(tree, site, sets);
+      expect(out).toContain('_llms-txt/guides.txt');
+      expect(out).not.toContain('getting-started');
+      expect(out).toContain('https://example.com/docs/demo/');
+      expect(out).toContain('https://example.com/docs/demo/phase-1/');
+    });
+
+    it('backward compat: no customSets arg produces original behavior', () => {
+      const lb = node('Load Balancing', undefined, undefined, [
+        node('HTTP Load Balancer', 'resources/http_loadbalancer'),
+      ]);
+      const out = renderSectionTree([lb], site);
+      expect(out).not.toContain('_llms-txt');
+      expect(out).toContain('http_loadbalancer');
+    });
+  });
+
   it('matches the xcsh#223 reference output', () => {
     const out = renderSectionTree(
       [

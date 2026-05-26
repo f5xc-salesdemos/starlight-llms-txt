@@ -22,23 +22,26 @@ export const GET: APIRoute = async (context) => {
   if (starlightLllmsTxtContext.details) segments.push(starlightLllmsTxtContext.details);
 
   // Further documentation links.
-  segments.push(`## Documentation Sets`);
-  segments.push(
-    [
-      `- [Abridged documentation](${llmsSmallLink}): a compact version of the documentation for ${getSiteTitle()}, with non-essential content removed`,
-      `- [Complete documentation](${llmsFullLink}): the full documentation for ${getSiteTitle()}`,
+  const docSetLinks = [
+    `- [Abridged documentation](${llmsSmallLink}): a compact version of the documentation for ${getSiteTitle()}, with non-essential content removed`,
+    `- [Complete documentation](${llmsFullLink}): the full documentation for ${getSiteTitle()}`,
+  ];
+  if (!starlightLllmsTxtContext.sidebarNav) {
+    docSetLinks.push(
       ...starlightLllmsTxtContext.customSets.map(
         ({ label, description, slug }) =>
           `- [${label}](${new URL(`./_llms-txt/${slug}.txt`, site)})` + (description ? `: ${description}` : ''),
       ),
-    ].join('\n'),
-  );
+    );
+  }
+  segments.push(`## Documentation Sets`);
+  segments.push(docSetLinks.join('\n'));
 
   // Sidebar navigation — Tier 2 routing.
   if (starlightLllmsTxtContext.sidebarNav) {
     const docs = await getCollection('docs', (doc) => isDefaultLocale(doc) && !doc.data.draft);
     const tree = buildSectionTree(docs, starlightLllmsTxtContext.promote, starlightLllmsTxtContext.demote);
-    const rendered = renderSectionTree(tree, site);
+    const rendered = renderSectionTree(tree, site, starlightLllmsTxtContext.customSets);
     if (rendered) segments.push(rendered);
   }
 
