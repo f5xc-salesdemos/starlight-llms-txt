@@ -252,11 +252,15 @@ export function renderSectionTree(
   }
 
   const lines: string[] = ['## Sections', ''];
+  const emitted = new Set<string>();
 
   function renderNode(node: SectionNode, depth: number): void {
+    const key = node.title.toLowerCase();
     const indent = '  '.repeat(depth);
-    const matched = setMap.get(node.title.toLowerCase());
+    const matched = setMap.get(key);
     if (matched) {
+      if (emitted.has(key)) return;
+      emitted.add(key);
       const url = new URL(`./_llms-txt/${matched.slug}.txt`, site);
       const desc = node.description ?? matched.description;
       const descSuffix = desc ? `: ${desc}` : '';
