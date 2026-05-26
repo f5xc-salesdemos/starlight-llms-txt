@@ -1,5 +1,11 @@
 # starlight-llms-txt
 
+## 1.2.2
+
+### Patch Changes
+
+- [#30](https://github.com/f5xc-salesdemos/starlight-llms-txt/pull/30) [`a4e3c1c`](https://github.com/f5xc-salesdemos/starlight-llms-txt/commit/a4e3c1c5b9135f7b311733e6982a5e7ae0ff49e0) Thanks [@robinmordasiewicz](https://github.com/robinmordasiewicz)! - Deduplicate Sections entries when a node matches a custom set — prevents duplicate Guides/Functions lines in the llms.txt output for subcategory-aware sites.
+
 ## 1.2.1
 
 ### Patch Changes
