@@ -1,59 +1,59 @@
 {
-	"name": "@f5xc-salesdemos/starlight-llms-txt",
-	"version": "1.1.0",
-	"license": "MIT",
-	"description": "Generate llms.txt files to train large language models on your Starlight documentation website",
-	"author": "f5xc-salesdemos (fork of delucis/starlight-llms-txt)",
-	"type": "module",
-	"exports": {
-		".": "./index.ts"
-	},
-	"files": [
-		"*.ts",
-		"!*.test.ts",
-		"!vitest.config.ts",
-		"CHANGELOG.md"
-	],
-	"dependencies": {
-		"@astrojs/mdx": "^5.0.3",
-		"@types/hast": "^3.0.4",
-		"@types/micromatch": "^4.0.10",
-		"github-slugger": "^2.0.0",
-		"hast-util-select": "^6.0.4",
-		"micromatch": "^4.0.8",
-		"rehype-parse": "^9.0.1",
-		"rehype-remark": "^10.0.1",
-		"remark-gfm": "^4.0.1",
-		"remark-stringify": "^11.0.0",
-		"unified": "^11.0.5",
-		"unist-util-remove": "^4.0.0"
-	},
-	"devDependencies": {
-		"@astrojs/starlight": "^0.38.3",
-		"astro": "^6.1.5",
-		"vitest": "^3.2.0"
-	},
-	"scripts": {
-		"test": "vitest run",
-		"test:watch": "vitest"
-	},
-	"peerDependencies": {
-		"@astrojs/starlight": ">=0.38.0",
-		"astro": "^6.0.0"
-	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"homepage": "https://f5xc-salesdemos.github.io/starlight-llms-txt/",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/f5xc-salesdemos/starlight-llms-txt.git",
-		"directory": "packages/starlight-llms-txt"
-	},
-	"bugs": "https://github.com/f5xc-salesdemos/starlight-llms-txt/issues",
-	"keywords": [
-		"llms.txt",
-		"withastro",
-		"starlight"
-	]
+  "name": "@f5xc-salesdemos/starlight-llms-txt",
+  "version": "1.1.0",
+  "license": "MIT",
+  "description": "Generate llms.txt files to train large language models on your Starlight documentation website",
+  "author": "f5xc-salesdemos (fork of delucis/starlight-llms-txt)",
+  "type": "module",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "files": [
+    "*.ts",
+    "!*.test.ts",
+    "!vitest.config.ts",
+    "CHANGELOG.md"
+  ],
+  "dependencies": {
+    "@astrojs/mdx": "^5.0.3",
+    "@types/hast": "^3.0.4",
+    "@types/micromatch": "^4.0.10",
+    "github-slugger": "^2.0.0",
+    "hast-util-select": "^6.0.4",
+    "micromatch": "^4.0.8",
+    "rehype-parse": "^9.0.1",
+    "rehype-remark": "^10.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-stringify": "^11.0.0",
+    "unified": "^11.0.5",
+    "unist-util-remove": "^4.0.0"
+  },
+  "devDependencies": {
+    "@astrojs/starlight": "^0.38.3",
+    "astro": "^6.1.5",
+    "vitest": "^3.2.0"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "peerDependencies": {
+    "@astrojs/starlight": ">=0.38.0",
+    "astro": "^6.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://f5xc-salesdemos.github.io/starlight-llms-txt/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/f5xc-salesdemos/starlight-llms-txt.git",
+    "directory": "packages/starlight-llms-txt"
+  },
+  "bugs": "https://github.com/f5xc-salesdemos/starlight-llms-txt/issues",
+  "keywords": [
+    "llms.txt",
+    "withastro",
+    "starlight"
+  ]
 }
