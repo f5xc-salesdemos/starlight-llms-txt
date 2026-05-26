@@ -1,5 +1,11 @@
 # starlight-llms-txt
 
+## 1.2.0
+
+### Minor Changes
+
+- [#18](https://github.com/f5xc-salesdemos/starlight-llms-txt/pull/18) [`f850ddd`](https://github.com/f5xc-salesdemos/starlight-llms-txt/commit/f850dddf7f7791c11ac15c0d1dfc379bb4262351) Thanks [@robinmordasiewicz](https://github.com/robinmordasiewicz)! - Add subcategory-aware grouping to section tree and auto-generate custom sets from frontmatter
+
 ## 1.1.0
 
 ### Minor Changes
