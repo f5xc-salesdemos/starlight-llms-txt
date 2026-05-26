@@ -1,29 +1,29 @@
 {
-	"name": "starlight-llms-txt-monorepo",
-	"version": "0.0.1",
-	"license": "MIT",
-	"description": "Generate llms.txt files to train large language models on your Starlight documentation website",
-	"author": "delucis",
-	"type": "module",
-	"engines": {
-		"node": "^18.17.1 || ^20.3.0 || >=21.0.0"
-	},
-	"packageManager": "pnpm@10.33.0",
-	"private": true,
-	"homepage": "https://github.com/delucis/starlight-llms-txt",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/delucis/starlight-llms-txt.git"
-	},
-	"bugs": "https://github.com/delucis/starlight-llms-txt/issues",
-	"scripts": {
-		"build:docs": "pnpm -F starlight-llms-txt-docs build",
-		"ci-version": "changeset version && pnpm install --no-frozen-lockfile",
-		"ci-publish": "changeset publish",
-		"test": "pnpm --filter @f5xc-salesdemos/starlight-llms-txt test"
-	},
-	"dependencies": {
-		"@changesets/changelog-github": "^0.6.0",
-		"@changesets/cli": "^2.30.0"
-	}
+  "name": "starlight-llms-txt-monorepo",
+  "version": "0.0.1",
+  "license": "MIT",
+  "description": "Generate llms.txt files to train large language models on your Starlight documentation website",
+  "author": "delucis",
+  "type": "module",
+  "engines": {
+    "node": "^18.17.1 || ^20.3.0 || >=21.0.0"
+  },
+  "packageManager": "pnpm@10.33.0",
+  "private": true,
+  "homepage": "https://github.com/delucis/starlight-llms-txt",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/delucis/starlight-llms-txt.git"
+  },
+  "bugs": "https://github.com/delucis/starlight-llms-txt/issues",
+  "scripts": {
+    "build:docs": "pnpm -F starlight-llms-txt-docs build",
+    "ci-version": "changeset version && pnpm install --no-frozen-lockfile",
+    "ci-publish": "changeset publish",
+    "test": "pnpm --filter @f5xc-salesdemos/starlight-llms-txt test"
+  },
+  "dependencies": {
+    "@changesets/changelog-github": "^0.6.0",
+    "@changesets/cli": "^2.30.0"
+  }
 }
