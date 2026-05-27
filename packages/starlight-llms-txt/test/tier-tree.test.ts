@@ -120,6 +120,24 @@ describe('buildTierTree', () => {
     expect(tree.children.get('overview')?.type).toBe('leaf');
     expect(tree.children.get('guides')?.type).toBe('directory');
   });
+
+  it('converts a leaf to a directory when a deeper page shares the same prefix', () => {
+    const tree = buildTierTree([
+      doc('guides', { title: 'Guides Overview', description: 'Top-level guides page' }),
+      doc('guides/setup', { title: 'Setup' }),
+    ]);
+    const guides = tree.children.get('guides');
+    expect(guides?.type).toBe('directory');
+    if (guides?.type !== 'directory') throw new Error('expected directory');
+    expect(guides.meta.title).toBe('Guides Overview');
+    expect(guides.meta.description).toBe('Top-level guides page');
+    const indexLeaf = guides.children.get('index');
+    expect(indexLeaf?.type).toBe('leaf');
+    expect(indexLeaf?.meta.title).toBe('Guides Overview');
+    const setupLeaf = guides.children.get('setup');
+    expect(setupLeaf?.type).toBe('leaf');
+    expect(setupLeaf?.meta.title).toBe('Setup');
+  });
 });
 
 describe('getAllTierPaths', () => {

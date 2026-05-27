@@ -102,7 +102,7 @@ export function buildTierTree(entries: DocLike[], options: TierTreeOptions = {})
       const seg = segments[i];
       if (!seg) continue;
       const existingChild = current.children.get(seg);
-      if (!existingChild || existingChild.type !== 'directory') {
+      if (!existingChild) {
         const slugPath = segments.slice(0, i + 1).join('/');
         const dirNode: DirectoryNode = {
           type: 'directory',
@@ -111,6 +111,22 @@ export function buildTierTree(entries: DocLike[], options: TierTreeOptions = {})
           meta: { title: titleCase(seg) },
           children: new Map(),
         };
+        current.children.set(seg, dirNode);
+        current = dirNode;
+      } else if (existingChild.type === 'leaf') {
+        const slugPath = segments.slice(0, i + 1).join('/');
+        const dirNode: DirectoryNode = {
+          type: 'directory',
+          slug: slugPath,
+          segment: seg,
+          meta: { title: existingChild.meta.title, description: existingChild.meta.description },
+          children: new Map(),
+        };
+        dirNode.children.set('index', {
+          ...existingChild,
+          slug: `${slugPath}/index`,
+          segment: 'index',
+        });
         current.children.set(seg, dirNode);
         current = dirNode;
       } else {
