@@ -1,6 +1,6 @@
 {
   "name": "@f5xc-salesdemos/starlight-llms-txt",
-  "version": "1.2.2",
+  "version": "1.3.0",
   "license": "MIT",
   "description": "Generate llms.txt files to train large language models on your Starlight documentation website",
   "author": "f5xc-salesdemos (fork of delucis/starlight-llms-txt)",

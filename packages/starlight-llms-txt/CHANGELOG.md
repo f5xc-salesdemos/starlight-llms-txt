@@ -1,5 +1,11 @@
 # starlight-llms-txt
 
+## 1.3.0
+
+### Minor Changes
+
+- [#41](https://github.com/f5xc-salesdemos/starlight-llms-txt/pull/41) [`193dd0d`](https://github.com/f5xc-salesdemos/starlight-llms-txt/commit/193dd0d1bc4b8870a40f7fdf4fbf5435b04fba96) Thanks [@robinmordasiewicz](https://github.com/robinmordasiewicz)! - Add auto-tiered `.txt` hierarchy for progressive AI discovery. Every hint link in `llms.txt` now points to a `.txt` file. Content lives only at leaf nodes; intermediate tiers contain metadata hints. Replaces `customSets` and `perPageMarkdown` with a single `tieredHierarchy` option (enabled by default).
+
 ## 1.2.2
 
 ### Patch Changes
