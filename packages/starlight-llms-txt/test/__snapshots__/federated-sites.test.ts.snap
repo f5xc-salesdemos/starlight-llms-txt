@@ -6,10 +6,3 @@ exports[`renderFederatedSites > matches the xcsh#223 reference output 1`] = `
 - [WAF](https://f5xc-salesdemos.github.io/waf/llms.txt): Web application firewall
 - [CSD](https://f5xc-salesdemos.github.io/csd/llms.txt): Client-side defense"
 `;
-
-exports[`renderFederatedSites matches the xcsh#223 reference output 1`] = `
-"## Federated Sites
-
-- [WAF](https://f5xc-salesdemos.github.io/waf/llms.txt): Web application firewall
-- [CSD](https://f5xc-salesdemos.github.io/csd/llms.txt): Client-side defense"
-`;
