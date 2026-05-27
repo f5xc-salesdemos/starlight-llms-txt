@@ -1,30 +1,12 @@
 import type { StarlightUserConfig } from '@astrojs/starlight/types';
 import type { AstroConfig } from 'astro';
-import type { PerPageMarkdownConfig } from './per-page-markdown-utils';
-
-interface CustomSetUserConfig {
-  /** Label for this subset of documentation, e.g. `"Tutorial"` */
-  label: string;
-  /** An array of page slugs or glob patterns that match page slugs for docs to include in this set., e.g. `["tutorial/**"]` */
-  paths: string[];
-  /** An optional description for this subset of the documentation, e.g. `"a step-by-step tutorial to build a new project"` */
-  description?: string;
-}
-
-interface CustomSet extends CustomSetUserConfig {
-  slug: string;
-}
 
 interface FederatedSiteCategoryUserConfig {
-  /** Unique identifier for this category, e.g. `"lab-infrastructure"` */
   id: string;
-  /** Human-readable heading rendered as a `## {label}` section in llms.txt */
   label: string;
-  /** Optional description rendered below the section heading */
   description?: string;
 }
 
-/** Project configuration metadata passed from the integration to the routes in a virtual module. */
 export interface ProjectContext {
   base: AstroConfig['base'];
   defaultLocale: StarlightUserConfig['defaultLocale'];
@@ -33,7 +15,6 @@ export interface ProjectContext {
   description: StarlightUserConfig['description'];
   details: StarlightLllmsTextOptions['details'];
   optionalLinks: NonNullable<StarlightLllmsTextOptions['optionalLinks']>;
-  customSets: Array<CustomSet>;
   minify: NonNullable<StarlightLllmsTextOptions['minify']>;
   promote: NonNullable<StarlightLllmsTextOptions['promote']>;
   demote: NonNullable<StarlightLllmsTextOptions['demote']>;
@@ -41,258 +22,41 @@ export interface ProjectContext {
   pageSeparator: NonNullable<StarlightLllmsTextOptions['pageSeparator']>;
   rawContent: NonNullable<StarlightLllmsTextOptions['rawContent']>;
   sidebarNav: NonNullable<StarlightLllmsTextOptions['sidebarNav']>;
+  tieredHierarchy: NonNullable<StarlightLllmsTextOptions['tieredHierarchy']>;
   federatedSites: NonNullable<StarlightLllmsTextOptions['federatedSites']>;
   federatedSiteCategories: NonNullable<StarlightLllmsTextOptions['federatedSiteCategories']>;
-  perPageMarkdown: PerPageMarkdownConfig;
 }
 
-/** Plugin user options. */
 export interface StarlightLllmsTextOptions {
-  /**
-   * Provide a custom name for this project or software. This will be used in `llms.txt` to identify
-   * what the documentation is for.
-   *
-   * Default: the value of Starlight’s `title` option.
-   *
-   * @example "FastHTML"
-   */
   projectName?: string;
-
-  /**
-   * Set a custom description for your documentation site to share with large language models.
-   * Can include Markdown syntax. Will be displayed in `llms.txt` immediately after the file’s title.
-   *
-   * According to <https://llmstxt.org/> this should be:
-   *
-   * > a short summary of the project, containing key information necessary for understanding the
-   * > rest of the file
-   *
-   * Default: The value of Starlight’s `description` option.
-   *
-   * @example
-   * ```md
-   * FastHTML is a python library which brings together Starlette, Uvicorn, HTMX, and fastcore's `FT` "FastTags" into a library for creating server-rendered hypermedia applications.
-   * ```
-   */
   description?: string;
-
-  /**
-   * Provide addition details to add after the description in `llms.txt`.
-   *
-   * According to <https://llmstxt.org/> this should be:
-   *
-   * > Zero or more markdown sections (e.g. paragraphs, lists, etc) of any type except headings,
-   * > containing more detailed information about the project and how to interpret the provided files
-   *
-   * @example
-   * ```md
-   * Important notes:
-   *
-   * - Although parts of its API are inspired by FastAPI, it is *not* compatible with FastAPI syntax and is not targeted at creating API services
-   * - FastHTML is compatible with JS-native web components and any vanilla JS library, but not with React, Vue, or Svelte.
-   * ```
-   */
   details?: string;
-
-  /**
-   * An array of optional links to add to the `llms.txt` entrypoint.
-   *
-   * URLs provided here can be skipped by the LLM if a shorter context is needed.
-   * Use it for secondary information which is not already in your docs content.
-   */
-  optionalLinks?: Array<{
-    label: string;
-    url: string;
-    description?: string;
-  }>;
-
-  /**
-   * An array of custom subsets of your docs to process and add to the `llms.txt` entrypoint.
-   */
-  customSets?: Array<CustomSetUserConfig>;
-
-  /** Control what elements are removed in `llms-small.txt`. */
+  optionalLinks?: Array<{ label: string; url: string; description?: string }>;
   minify?: {
-    /**
-     * Remove Starlight note asides in `llms-small.txt`.
-     * @default true
-     */
     note?: boolean;
-    /**
-     * Remove Starlight tip asides in `llms-small.txt`.
-     * @default true
-     */
     tip?: boolean;
-    /**
-     * Remove Starlight caution asides in `llms-small.txt`.
-     * @default false
-     */
     caution?: boolean;
-    /**
-     * Remove Starlight danger asides in `llms-small.txt`.
-     * @default false
-     */
     danger?: boolean;
-    /**
-     * Remove HTML `<details>` elements in `llms-small.txt`.
-     * @default true
-     */
     details?: boolean;
-    /**
-     * Collapse whitespace in `llms-small.txt`.
-     * @default true
-     */
     whitespace?: boolean;
-
-    /**
-     * Custom selectors to exclude when generating `llms-small.txt`.
-     *
-     * @default []
-     *
-     * @example
-     * // Filter out elements with the class name `sponsors` when creating llms-small.txt
-     * customSelectors: [".sponsors"],
-     */
     customSelectors?: string[];
   };
-
-  /**
-   * Micromatch expressions to match page IDs that should be sorted to the top of the output.
-   *
-   * @default
-   * ['index*']
-   */
   promote?: string[];
-
-  /**
-   * Micromatch expressions to match page IDs that should be sorted to the end of the output.
-   *
-   * If a page matches both `promote` and `demote`, it will be demoted.
-   *
-   * @default []
-   */
   demote?: string[];
-
-  /**
-   * Slugs of pages to exclude from `llms-small.txt`. Supports glob patterns.
-   *
-   * @default []
-   *
-   * @example
-   * // Ignore an old page and all tutorial pages when creating llms-small.txt
-   * exclude: ["old-page", "tutorial/**"],
-   */
   exclude?: string[];
-
-  /**
-   * String used to separate pages in the generated text.
-   * @default "\n\n"
-   */
   pageSeparator?: string;
-
-  /**
-   * When enabled, returns raw content without processing MDX components.
-   * This skips the HTML rendering and Markdown conversion pipeline for faster processing.
-   * Useful when you want to preserve the original Markdown content without component processing.
-   *
-   * @default false
-   */
   rawContent?: boolean;
-
-  /**
-   * When enabled, generate a `## Sections` block in `llms.txt` listing the site's pages
-   * in hierarchical order. Pages are grouped by first path segment (e.g. `demo/phase-1-build`
-   * under a `demo` group). If a group has an index page (`demo/index`), its frontmatter is
-   * used for the group heading; otherwise the segment is title-cased. Each entry's
-   * `description` (from frontmatter) is appended automatically when present.
-   *
-   * Respects the `promote` and `demote` options for ordering. Draft pages and non-default
-   * locales are excluded.
-   *
-   * @default false
-   */
   sidebarNav?: boolean;
-
   /**
-   * An array of links to other sites' `llms.txt` entry points — used by a docs portal
-   * to federate out to product-specific documentation.
-   *
-   * Rendered as a `## Federated Sites` block in `llms.txt`, placed after `## Sections`
-   * and before `## Notes`. If the array is empty (the default), the block is omitted
-   * entirely, so leaf product sites don't need conditional config.
-   *
-   * @default []
-   * @example
-   * federatedSites: [
-   *   { label: 'WAF', url: 'https://example.com/waf/llms.txt', description: 'Web application firewall' },
-   *   { label: 'CSD', url: 'https://example.com/csd/llms.txt', description: 'Client-side defense' },
-   * ]
+   * When enabled, auto-generates a tiered `.txt` hierarchy under `/_llms-txt/`.
+   * @default true
    */
+  tieredHierarchy?: boolean;
   federatedSites?: Array<{
     label: string;
     url: string;
     description?: string;
-    /** Category ID matching a `federatedSiteCategories` entry. Sites without a category render under "Other". */
     category?: string;
   }>;
-
-  /**
-   * Define category groups for federated sites. When provided, federated sites
-   * are grouped by category and rendered as separate `##` sections instead of
-   * a single `## Federated Sites` block.
-   *
-   * Sites whose `category` does not match any ID, or sites without a `category`,
-   * are rendered under `## Other`.
-   *
-   * If omitted, all federated sites render in a single `## Federated Sites` section
-   * (backwards-compatible).
-   *
-   * @default undefined
-   * @example
-   * federatedSiteCategories: [
-   *   { id: 'lab-infrastructure', label: 'Lab Infrastructure', description: 'Deployable Azure VM components' },
-   *   { id: 'product-features', label: 'Product Features' },
-   * ]
-   */
   federatedSiteCategories?: Array<FederatedSiteCategoryUserConfig>;
-
-  /**
-   * Enable generation of individual Markdown (.md) files for each documentation page.
-   * This implements the second part of the llmstxt.org standard proposal.
-   *
-   * Can be set to `true` to enable with defaults, or an object for advanced configuration.
-   *
-   * @default false
-   *
-   * @example
-   * // Enable with defaults
-   * perPageMarkdown: true
-   *
-   * @example
-   * // Enable with custom configuration
-   * perPageMarkdown: {
-   *   extensionStrategy: 'replace',
-   *   excludePages: ['404', 'admin/**'],
-   * }
-   */
-  perPageMarkdown?:
-    | boolean
-    | {
-        /**
-         * File naming pattern for individual Markdown files.
-         * - 'append': Adds .md to the existing URL (e.g., /docs/getting-started.html.md)
-         * - 'replace': Replaces the extension with .md (e.g., /docs/getting-started.md)
-         *
-         * @default 'append'
-         */
-        extensionStrategy?: 'append' | 'replace';
-        /**
-         * Page IDs to exclude from individual .md file generation. Supports glob patterns.
-         *
-         * @default ['404']
-         *
-         * @example ['404', 'admin/**']
-         */
-        excludePages?: string[];
-      };
 }

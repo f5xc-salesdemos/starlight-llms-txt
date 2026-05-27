@@ -1,8 +1,5 @@
 import type { StarlightPlugin } from '@astrojs/starlight/types';
 import { AstroError } from 'astro/errors';
-import GithubSlugger from 'github-slugger';
-import { resolvePerPageMarkdownOptions } from './per-page-markdown-utils';
-import { generateSubcategorySets } from './subcategory-sets';
 import type { ProjectContext, StarlightLllmsTextOptions } from './types';
 
 export default function starlightLlmsTxt(opts: StarlightLllmsTextOptions = {}): StarlightPlugin {
@@ -35,42 +32,14 @@ export default function starlightLlmsTxt(opts: StarlightLllmsTextOptions = {}): 
                 pattern: '/llms-small.txt',
                 prerender: true,
               });
-              injectRoute({
-                entrypoint: new URL('./llms-custom.txt.ts', import.meta.url),
-                pattern: '/_llms-txt/[slug].txt',
-                prerender: true,
-              });
 
-              // Parse perPageMarkdown config
-              const perPageMarkdownConfig = resolvePerPageMarkdownOptions(opts.perPageMarkdown);
-
-              // Inject the individual page Markdown route if enabled
-              if (perPageMarkdownConfig.enabled) {
+              const tieredHierarchy = opts.tieredHierarchy ?? true;
+              if (tieredHierarchy) {
                 injectRoute({
-                  entrypoint: new URL('./page-markdown.ts', import.meta.url),
-                  pattern: '/[...slug].md',
+                  entrypoint: new URL('./llms-tiered.txt.ts', import.meta.url),
+                  pattern: '/_llms-txt/[...path].txt',
                   prerender: true,
                 });
-              }
-
-              const slugger = new GithubSlugger();
-
-              // Build manual sets from user config
-              const manualSets = (opts.customSets ?? []).map((set) => ({
-                ...set,
-                slug: slugger.slug(set.label),
-              }));
-
-              // Auto-generate sets from subcategory frontmatter
-              const contentDir = new URL('src/content/docs', astroConfig.root).pathname;
-              const autoSets = generateSubcategorySets(contentDir);
-
-              // Merge: manual sets take precedence by label
-              let mergedSets = manualSets;
-              if (autoSets) {
-                const manualLabels = new Set(manualSets.map((s) => s.label));
-                const newAutoSets = autoSets.filter((s) => !manualLabels.has(s.label));
-                mergedSets = [...manualSets, ...newAutoSets];
               }
 
               const projectContext: ProjectContext = {
@@ -79,7 +48,6 @@ export default function starlightLlmsTxt(opts: StarlightLllmsTextOptions = {}): 
                 description: opts.description ?? config.description,
                 details: opts.details,
                 optionalLinks: opts.optionalLinks ?? [],
-                customSets: mergedSets,
                 minify: opts.minify ?? {},
                 promote: opts.promote ?? ['index*'],
                 demote: opts.demote ?? [],
@@ -89,9 +57,9 @@ export default function starlightLlmsTxt(opts: StarlightLllmsTextOptions = {}): 
                 pageSeparator: opts.pageSeparator ?? '\n\n',
                 rawContent: opts.rawContent ?? false,
                 sidebarNav: opts.sidebarNav ?? false,
+                tieredHierarchy,
                 federatedSites: opts.federatedSites ?? [],
                 federatedSiteCategories: opts.federatedSiteCategories ?? [],
-                perPageMarkdown: perPageMarkdownConfig,
               };
 
               const modules = {
@@ -99,7 +67,6 @@ export default function starlightLlmsTxt(opts: StarlightLllmsTextOptions = {}): 
                   projectContext,
                 )}`,
               };
-              /** Mapping names prefixed with `\0` to their original form. */
               const resolutionMap = Object.fromEntries(
                 (Object.keys(modules) as (keyof typeof modules)[]).map((key) => [resolveVirtualModuleId(key), key]),
               );
