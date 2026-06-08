@@ -33,6 +33,17 @@ export default function starlightLlmsTxt(opts: StarlightLllmsTextOptions = {}): 
                 prerender: true,
               });
 
+              injectRoute({
+                entrypoint: new URL('./llms-locale-full.txt.ts', import.meta.url),
+                pattern: '/[locale]/llms-full.txt',
+                prerender: true,
+              });
+              injectRoute({
+                entrypoint: new URL('./llms-locale-small.txt.ts', import.meta.url),
+                pattern: '/[locale]/llms-small.txt',
+                prerender: true,
+              });
+
               const tieredHierarchy = opts.tieredHierarchy ?? true;
               if (tieredHierarchy) {
                 injectRoute({

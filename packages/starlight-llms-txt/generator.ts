@@ -3,7 +3,7 @@ import { starlightLllmsTxtContext } from 'virtual:starlight-llms-txt/context';
 import type { APIContext } from 'astro';
 import micromatch from 'micromatch';
 import { entryToSimpleMarkdown } from './entryToSimpleMarkdown';
-import { defaultLang, isDefaultLocale } from './utils';
+import { defaultLang, isDefaultLocale, isLocale } from './utils';
 
 /** Collator to compare two strings in the default language. */
 const collator = new Intl.Collator(defaultLang);
@@ -25,9 +25,13 @@ export async function generateLlmsTxt(
     description: string | undefined;
     exclude?: string[] | undefined;
     include?: string[] | undefined;
+    locale?: string | undefined;
   },
 ): Promise<string> {
-  let docs = await getCollection('docs', (doc) => isDefaultLocale(doc) && !doc.data.draft);
+  const localeFilter = locale
+    ? (doc: Parameters<Parameters<typeof getCollection>[1] & {}>[0]) => isLocale(doc, locale) && !doc.data.draft
+    : (doc: Parameters<Parameters<typeof getCollection>[1] & {}>[0]) => isDefaultLocale(doc) && !doc.data.draft;
+  let docs = await getCollection('docs', localeFilter);
   if (include) {
     docs = docs.filter((doc) => micromatch.isMatch(doc.id, include));
   }

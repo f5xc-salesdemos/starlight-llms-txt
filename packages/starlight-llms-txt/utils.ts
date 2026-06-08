@@ -17,6 +17,17 @@ export function isDefaultLocale(doc: CollectionEntry<'docs'>): boolean {
   return !(localeKeys.includes(doc.id) || startsWithLocaleRE.test(doc.id));
 }
 
+/** Check if a content collection entry belongs to a specific locale. */
+export function isLocale(doc: CollectionEntry<'docs'>, targetLocale: string): boolean {
+  if (targetLocale === defaultLang || targetLocale === 'root') return isDefaultLocale(doc);
+  return doc.id === targetLocale || doc.id.startsWith(`${targetLocale}/`);
+}
+
+/** Get all non-default locale keys. */
+export function getLocaleKeys(): string[] {
+  return localeKeys;
+}
+
 /** Append a `/` to the passed string if it doesn’t already end with one. */
 export function ensureTrailingSlash(path: string) {
   return path.at(-1) === '/' ? path : `${path}/`;
