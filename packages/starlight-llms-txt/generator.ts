@@ -1,3 +1,4 @@
+import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 import { starlightLllmsTxtContext } from 'virtual:starlight-llms-txt/context';
 import type { APIContext } from 'astro';
@@ -18,6 +19,7 @@ export async function generateLlmsTxt(
     description,
     exclude,
     include,
+    locale,
   }: {
     /** Generate a smaller file to fit within smaller context windows. */
     minify: boolean;
@@ -28,10 +30,10 @@ export async function generateLlmsTxt(
     locale?: string | undefined;
   },
 ): Promise<string> {
-  const localeFilter = locale
-    ? (doc: Parameters<Parameters<typeof getCollection>[1] & {}>[0]) => isLocale(doc, locale) && !doc.data.draft
-    : (doc: Parameters<Parameters<typeof getCollection>[1] & {}>[0]) => isDefaultLocale(doc) && !doc.data.draft;
-  let docs = await getCollection('docs', localeFilter);
+  const docFilter = locale
+    ? (doc: { id: string; data: { draft?: boolean } }) => isLocale(doc as CollectionEntry<'docs'>, locale) && !doc.data.draft
+    : (doc: { id: string; data: { draft?: boolean } }) => isDefaultLocale(doc as CollectionEntry<'docs'>) && !doc.data.draft;
+  let docs = await getCollection('docs', docFilter);
   if (include) {
     docs = docs.filter((doc) => micromatch.isMatch(doc.id, include));
   }
