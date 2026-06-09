@@ -11,7 +11,7 @@ Starten Sie einen lokalen Entwicklungsserver, indem Sie den folgenden Befehl in 
 pnpm run dev
 ```
 
-Inhalte befinden sich im Verzeichnis [`src/content/docs/`](./src/content/docs/).
+Inhalte finden Sie im Verzeichnis [`src/content/docs/`](./src/content/docs/).
 
 ## Lizenz
 
