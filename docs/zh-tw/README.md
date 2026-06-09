@@ -11,7 +11,7 @@ i18n:
 pnpm run dev
 ```
 
-內容可以在 [`src/content/docs/`](./src/content/docs/) 目錄中找到。
+內容位於 [`src/content/docs/`](./src/content/docs/) 目錄中。
 
 ## 授權條款
 
