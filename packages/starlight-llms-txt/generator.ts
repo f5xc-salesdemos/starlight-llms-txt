@@ -31,8 +31,10 @@ export async function generateLlmsTxt(
   },
 ): Promise<string> {
   const docFilter = locale
-    ? (doc: { id: string; data: { draft?: boolean } }) => isLocale(doc as CollectionEntry<'docs'>, locale) && !doc.data.draft
-    : (doc: { id: string; data: { draft?: boolean } }) => isDefaultLocale(doc as CollectionEntry<'docs'>) && !doc.data.draft;
+    ? (doc: { id: string; data: { draft?: boolean } }) =>
+        isLocale(doc as CollectionEntry<'docs'>, locale) && !doc.data.draft
+    : (doc: { id: string; data: { draft?: boolean } }) =>
+        isDefaultLocale(doc as CollectionEntry<'docs'>) && !doc.data.draft;
   let docs = await getCollection('docs', docFilter);
   if (include) {
     docs = docs.filter((doc) => micromatch.isMatch(doc.id, include));

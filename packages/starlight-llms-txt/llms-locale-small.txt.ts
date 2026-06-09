@@ -1,5 +1,5 @@
-import type { APIRoute, GetStaticPaths } from 'astro';
 import { starlightLllmsTxtContext } from 'virtual:starlight-llms-txt/context';
+import type { APIRoute, GetStaticPaths } from 'astro';
 import { generateLlmsTxt } from './generator';
 import { getLocaleKeys, getSiteTitle } from './utils';
 
