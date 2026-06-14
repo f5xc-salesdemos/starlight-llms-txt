@@ -1,8 +1,3 @@
----
-i18n:
-  sourceHash: b5ed6461f3bd
-  translator: machine
----
 # Documentation
 
 Démarrez un serveur de développement local en exécutant la commande suivante dans votre terminal :

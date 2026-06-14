@@ -1,8 +1,3 @@
----
-i18n:
-  sourceHash: b5ed6461f3bd
-  translator: machine
----
 # 文档
 
 在终端中运行以下命令以启动本地开发服务器：
