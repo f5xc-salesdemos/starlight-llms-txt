@@ -1,8 +1,3 @@
----
-i18n:
-  sourceHash: b5ed6461f3bd
-  translator: machine
----
 # 文件
 
 在終端機中執行以下指令來啟動本地開發伺服器：

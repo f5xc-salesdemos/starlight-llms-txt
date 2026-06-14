@@ -1,8 +1,3 @@
----
-i18n:
-  sourceHash: b5ed6461f3bd
-  translator: machine
----
 # ドキュメント
 
 ターミナルで以下のコマンドを実行して、ローカル開発サーバーを起動します：
