@@ -4,7 +4,7 @@
 [![Repository Settings](https://github.com/f5xc-salesdemos/starlight-llms-txt/actions/workflows/enforce-repo-settings.yml/badge.svg)](https://github.com/f5xc-salesdemos/starlight-llms-txt/actions/workflows/enforce-repo-settings.yml)
 [![License](https://img.shields.io/github/license/f5xc-salesdemos/starlight-llms-txt)](LICENSE)
 
-Generate llms.txt files to train large language models on your Starlight documentation website
+Generate llms.txt files to train large language models on your Starlight documentation site
 
 ## Documentation
 
