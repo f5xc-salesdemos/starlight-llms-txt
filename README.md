@@ -1,3 +1,17 @@
+🌐 English |
+[日本語](https://f5xc-salesdemos.github.io/starlight-llms-txt/ja/) |
+[한국어](https://f5xc-salesdemos.github.io/starlight-llms-txt/ko/) |
+[简体中文](https://f5xc-salesdemos.github.io/starlight-llms-txt/zh-cn/) |
+[繁體中文](https://f5xc-salesdemos.github.io/starlight-llms-txt/zh-tw/) |
+[Español](https://f5xc-salesdemos.github.io/starlight-llms-txt/es/) |
+[Português](https://f5xc-salesdemos.github.io/starlight-llms-txt/pt-br/) |
+[Français](https://f5xc-salesdemos.github.io/starlight-llms-txt/fr/) |
+[Deutsch](https://f5xc-salesdemos.github.io/starlight-llms-txt/de/) |
+[Italiano](https://f5xc-salesdemos.github.io/starlight-llms-txt/it/) |
+[العربية](https://f5xc-salesdemos.github.io/starlight-llms-txt/ar/) |
+[हिन्दी](https://f5xc-salesdemos.github.io/starlight-llms-txt/hi/) |
+[ไทย](https://f5xc-salesdemos.github.io/starlight-llms-txt/th/)
+
 # Starlight Llms Txt
 
 [![GitHub Pages Deploy](https://github.com/f5xc-salesdemos/starlight-llms-txt/actions/workflows/github-pages-deploy.yml/badge.svg)](https://github.com/f5xc-salesdemos/starlight-llms-txt/actions/workflows/github-pages-deploy.yml)
@@ -6,18 +20,10 @@
 
 Generate llms.txt files to train large language models on your Starlight documentation site
 
+
 ## Documentation
 
 Full documentation is available at **[https://f5xc-salesdemos.github.io/starlight-llms-txt/](https://f5xc-salesdemos.github.io/starlight-llms-txt/)**.
-
-## Getting Started
-
-```bash
-git clone https://github.com/f5xc-salesdemos/starlight-llms-txt.git
-```
-
-See the [documentation](https://f5xc-salesdemos.github.io/starlight-llms-txt/) for detailed setup
-and usage guides.
 
 ## Contributing
 
