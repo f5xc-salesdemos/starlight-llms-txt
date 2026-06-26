@@ -1,8 +1,8 @@
-# @f5xc-salesdemos/starlight-llms-txt v1.0.0 Implementation Plan
+# @f5-sales-demo/starlight-llms-txt v1.0.0 Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Ship `@f5xc-salesdemos/starlight-llms-txt@1.0.0` to npm — a fork of `delucis/starlight-llms-txt@0.8.1` with three new options (`sidebarNav`, `federatedSites`, `perPageMarkdown`) to support the xcsh#223 cascading llms.txt knowledge hierarchy. No upstream PR submission in this release (deferred until production-validated).
+**Goal:** Ship `@f5-sales-demo/starlight-llms-txt@1.0.0` to npm — a fork of `delucis/starlight-llms-txt@0.8.1` with three new options (`sidebarNav`, `federatedSites`, `perPageMarkdown`) to support the xcsh#223 cascading llms.txt knowledge hierarchy. No upstream PR submission in this release (deferred until production-validated).
 
 **Architecture:** Three new features implemented as pure helpers (for Vitest unit coverage) called from Astro route handlers. Two distinct commit sets on one branch: upstream-candidate commits (feature code, cleanly cherry-pickable to `delucis/main` later) and fork-only commits (package rename, NPM_TOKEN wiring, test harness, release workflow guard, README).
 
@@ -54,7 +54,7 @@
 
 | Path | Change |
 |---|---|
-| `packages/starlight-llms-txt/package.json` | Rename to `@f5xc-salesdemos/starlight-llms-txt`, add `files` array, add test scripts, add `vitest` devDep |
+| `packages/starlight-llms-txt/package.json` | Rename to `@f5-sales-demo/starlight-llms-txt`, add `files` array, add test scripts, add `vitest` devDep |
 | `packages/starlight-llms-txt/README.md` | Replace with fork notice |
 | `packages/starlight-llms-txt/.npmignore` | Delete (superseded by `files` array) |
 | `docs/package.json` | Rename workspace dep key |
@@ -590,7 +590,7 @@ describe('renderSectionTree', () => {
 				node('API Reference', 'api-reference', 'REST API endpoints'),
 				node('FAQ', 'faq', 'Common questions'),
 			],
-			new URL('https://f5xc-salesdemos.github.io/csd/'),
+			new URL('https://f5-sales-demo.github.io/csd/'),
 		);
 		expect(out).toMatchSnapshot();
 	});
@@ -658,14 +658,14 @@ Expected content (snapshot is Vitest's pretty-printed form; the exact serializat
 exports[`renderSectionTree > matches the xcsh#223 reference output 1`] = `
 "## Sections
 
-- [Overview](https://f5xc-salesdemos.github.io/csd/overview/): Product overview and architecture
-- [Demo](https://f5xc-salesdemos.github.io/csd/demo/): 4-phase demo exercise
-  - [Phase 1 — Build](https://f5xc-salesdemos.github.io/csd/demo/phase-1-build/): Deploy infrastructure via API
-  - [Phase 2 — Attack](https://f5xc-salesdemos.github.io/csd/demo/phase-2-attack/): Simulated attack traffic
-  - [Phase 3 — Mitigate](https://f5xc-salesdemos.github.io/csd/demo/phase-3-mitigate/): Apply and verify mitigations
-  - [Phase 4 — Teardown](https://f5xc-salesdemos.github.io/csd/demo/phase-4-teardown/): Clean up demo objects
-- [API Reference](https://f5xc-salesdemos.github.io/csd/api-reference/): REST API endpoints
-- [FAQ](https://f5xc-salesdemos.github.io/csd/faq/): Common questions"
+- [Overview](https://f5-sales-demo.github.io/csd/overview/): Product overview and architecture
+- [Demo](https://f5-sales-demo.github.io/csd/demo/): 4-phase demo exercise
+  - [Phase 1 — Build](https://f5-sales-demo.github.io/csd/demo/phase-1-build/): Deploy infrastructure via API
+  - [Phase 2 — Attack](https://f5-sales-demo.github.io/csd/demo/phase-2-attack/): Simulated attack traffic
+  - [Phase 3 — Mitigate](https://f5-sales-demo.github.io/csd/demo/phase-3-mitigate/): Apply and verify mitigations
+  - [Phase 4 — Teardown](https://f5-sales-demo.github.io/csd/demo/phase-4-teardown/): Clean up demo objects
+- [API Reference](https://f5-sales-demo.github.io/csd/api-reference/): REST API endpoints
+- [FAQ](https://f5-sales-demo.github.io/csd/faq/): Common questions"
 `;
 ```
 
@@ -906,8 +906,8 @@ Expected: a `## Sections` block listing the docs site's pages (`getting-started`
 ```
 ## Sections
 
-- [Configuration](https://f5xc-salesdemos.github.io/starlight-llms-txt/configuration/)
-- [Getting Started](https://f5xc-salesdemos.github.io/starlight-llms-txt/getting-started/)
+- [Configuration](https://f5-sales-demo.github.io/starlight-llms-txt/configuration/)
+- [Getting Started](https://f5-sales-demo.github.io/starlight-llms-txt/getting-started/)
 ```
 
 The URLs may still use `delucis.github.io` at this point — that host rename happens in Task 13. The structure is what matters here.
@@ -991,8 +991,8 @@ describe('renderFederatedSites', () => {
 
 	it('matches the xcsh#223 reference output', () => {
 		const out = renderFederatedSites([
-			{ label: 'WAF', url: 'https://f5xc-salesdemos.github.io/waf/llms.txt', description: 'Web application firewall' },
-			{ label: 'CSD', url: 'https://f5xc-salesdemos.github.io/csd/llms.txt', description: 'Client-side defense' },
+			{ label: 'WAF', url: 'https://f5-sales-demo.github.io/waf/llms.txt', description: 'Web application firewall' },
+			{ label: 'CSD', url: 'https://f5-sales-demo.github.io/csd/llms.txt', description: 'Client-side defense' },
 		]);
 		expect(out).toMatchSnapshot();
 	});
@@ -1049,8 +1049,8 @@ Expected content:
 exports[`renderFederatedSites > matches the xcsh#223 reference output 1`] = `
 "## Federated Sites
 
-- [WAF](https://f5xc-salesdemos.github.io/waf/llms.txt): Web application firewall
-- [CSD](https://f5xc-salesdemos.github.io/csd/llms.txt): Client-side defense"
+- [WAF](https://f5-sales-demo.github.io/waf/llms.txt): Web application firewall
+- [CSD](https://f5-sales-demo.github.io/csd/llms.txt): Client-side defense"
 `;
 ```
 
@@ -1809,7 +1809,7 @@ on:
 jobs:
   release:
     name: Release
-    if: ${{ github.repository_owner == 'f5xc-salesdemos' }}
+    if: ${{ github.repository_owner == 'f5-sales-demo' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -1838,7 +1838,7 @@ jobs:
 ```
 
 Changes vs. the pre-edit file:
-- `if` guard: `delucis` → `f5xc-salesdemos`.
+- `if` guard: `delucis` → `f5-sales-demo`.
 - Remove `id-token: write` from `permissions` (no OIDC).
 - Add `registry-url: 'https://registry.npmjs.org'` to `setup-node` — writes the `.npmrc` line for auth.
 - Replace `NPM_TOKEN: ""` with `NPM_TOKEN: ${{ secrets.NPM_TOKEN }}` and add `NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}` (both consumers get the token).
@@ -1862,7 +1862,7 @@ Expected: no errors.
 ```bash
 git add .github/workflows/release.yml
 git commit -m "$(cat <<'EOF'
-ci(release): swap owner guard to f5xc-salesdemos, use NPM_TOKEN
+ci(release): swap owner guard to f5-sales-demo, use NPM_TOKEN
 
 - if-guard now matches this fork's owner so the release workflow
   actually fires on main pushes.
@@ -1899,11 +1899,11 @@ Edit `packages/starlight-llms-txt/package.json`. Full file after edit:
 
 ```json
 {
-	"name": "@f5xc-salesdemos/starlight-llms-txt",
+	"name": "@f5-sales-demo/starlight-llms-txt",
 	"version": "0.8.1",
 	"license": "MIT",
 	"description": "Generate llms.txt files to train large language models on your Starlight documentation website",
-	"author": "f5xc-salesdemos (fork of delucis/starlight-llms-txt)",
+	"author": "f5-sales-demo (fork of delucis/starlight-llms-txt)",
 	"type": "module",
 	"exports": {
 		".": "./index.ts"
@@ -1944,13 +1944,13 @@ Edit `packages/starlight-llms-txt/package.json`. Full file after edit:
 	"publishConfig": {
 		"access": "public"
 	},
-	"homepage": "https://f5xc-salesdemos.github.io/starlight-llms-txt/",
+	"homepage": "https://f5-sales-demo.github.io/starlight-llms-txt/",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/f5xc-salesdemos/starlight-llms-txt.git",
+		"url": "https://github.com/f5-sales-demo/starlight-llms-txt.git",
 		"directory": "packages/starlight-llms-txt"
 	},
-	"bugs": "https://github.com/f5xc-salesdemos/starlight-llms-txt/issues",
+	"bugs": "https://github.com/f5-sales-demo/starlight-llms-txt/issues",
 	"keywords": [
 		"llms.txt",
 		"withastro",
@@ -1974,9 +1974,9 @@ With `files` in place, `.npmignore` is ignored by npm and would create a second 
 Replace the contents of `packages/starlight-llms-txt/README.md`:
 
 ```md
-# @f5xc-salesdemos/starlight-llms-txt
+# @f5-sales-demo/starlight-llms-txt
 
-Fork of [`starlight-llms-txt`](https://github.com/delucis/starlight-llms-txt) by Chris Swithinbank, extended for the [f5xc-salesdemos](https://github.com/f5xc-salesdemos) documentation federation.
+Fork of [`starlight-llms-txt`](https://github.com/delucis/starlight-llms-txt) by Chris Swithinbank, extended for the [f5-sales-demo](https://github.com/f5-sales-demo) documentation federation.
 
 ## Additions over upstream
 
@@ -1984,15 +1984,15 @@ Fork of [`starlight-llms-txt`](https://github.com/delucis/starlight-llms-txt) by
 - `sidebarNav` — sidebar hierarchy in `llms.txt`, with frontmatter descriptions inlined automatically
 - `federatedSites` — cross-repo links for federated doc portals
 
-See the [configuration docs](https://f5xc-salesdemos.github.io/starlight-llms-txt/configuration/) for the full option reference.
+See the [configuration docs](https://f5-sales-demo.github.io/starlight-llms-txt/configuration/) for the full option reference.
 
 ## Relationship to upstream
 
-Compatible features are intended to land upstream at `delucis/starlight-llms-txt` after production validation. Until then, this package tracks the f5xc-salesdemos integration needs.
+Compatible features are intended to land upstream at `delucis/starlight-llms-txt` after production validation. Until then, this package tracks the f5-sales-demo integration needs.
 
 ## License
 
-MIT — copyright Chris Swithinbank, fork modifications by f5xc-salesdemos contributors.
+MIT — copyright Chris Swithinbank, fork modifications by f5-sales-demo contributors.
 ```
 
 - [ ] **Step 12.4: Rename the workspace dependency key in the docs package**
@@ -2005,7 +2005,7 @@ Edit `docs/package.json`:
     "astro": "^6.1.5",
     "sharp": "^0.34.5",
 -   "starlight-llms-txt": "workspace:*",
-+   "@f5xc-salesdemos/starlight-llms-txt": "workspace:*",
++   "@f5-sales-demo/starlight-llms-txt": "workspace:*",
     "starlight-package-managers": "^0.12.0"
   },
 ```
@@ -2017,22 +2017,22 @@ Edit `docs/astro.config.ts`:
 1. Update the import:
 ```diff
 - import starlightLlmsTxt from 'starlight-llms-txt';
-+ import starlightLlmsTxt from '@f5xc-salesdemos/starlight-llms-txt';
++ import starlightLlmsTxt from '@f5-sales-demo/starlight-llms-txt';
 ```
 
 2. Update the `site` URL:
 ```diff
 - site: 'https://delucis.github.io',
-+ site: 'https://f5xc-salesdemos.github.io',
++ site: 'https://f5-sales-demo.github.io',
 ```
 
 3. Update the GitHub links:
 ```diff
 -           href: 'https://github.com/delucis/starlight-llms-txt',
-+           href: 'https://github.com/f5xc-salesdemos/starlight-llms-txt',
++           href: 'https://github.com/f5-sales-demo/starlight-llms-txt',
   ...
 -         baseUrl: 'https://github.com/delucis/starlight-llms-txt/edit/main/docs/',
-+         baseUrl: 'https://github.com/f5xc-salesdemos/starlight-llms-txt/edit/main/docs/',
++         baseUrl: 'https://github.com/f5-sales-demo/starlight-llms-txt/edit/main/docs/',
 ```
 
 The `base: '/starlight-llms-txt'` stays as-is — that's the URL path segment on GitHub Pages, which is the repo name (same name in our fork).
@@ -2045,7 +2045,7 @@ Edit the root `package.json`:
   "scripts": {
     ...
 -   "test": "pnpm --filter starlight-llms-txt test"
-+   "test": "pnpm --filter @f5xc-salesdemos/starlight-llms-txt test"
++   "test": "pnpm --filter @f5-sales-demo/starlight-llms-txt test"
   },
 ```
 
@@ -2055,7 +2055,7 @@ Edit `.github/workflows/ci.yml`. In the `test` job:
 
 ```diff
 -     - run: pnpm --filter starlight-llms-txt test
-+     - run: pnpm --filter @f5xc-salesdemos/starlight-llms-txt test
++     - run: pnpm --filter @f5-sales-demo/starlight-llms-txt test
 ```
 
 - [ ] **Step 12.8: Update the changesets changelog repo**
@@ -2065,7 +2065,7 @@ Edit `.changeset/config.json`:
 ```diff
   "$schema": "https://unpkg.com/@changesets/config@3.0.3/schema.json",
 - "changelog": ["@changesets/changelog-github", { "repo": "delucis/starlight-llms-txt" }],
-+ "changelog": ["@changesets/changelog-github", { "repo": "f5xc-salesdemos/starlight-llms-txt" }],
++ "changelog": ["@changesets/changelog-github", { "repo": "f5-sales-demo/starlight-llms-txt" }],
   "commit": false,
 ```
 
@@ -2074,7 +2074,7 @@ Edit `.changeset/config.json`:
 The changesets created in Tasks 4, 6, and 10 reference the package as `starlight-llms-txt`. After the rename, those references are stale — change them too so `changesets status` recognizes them.
 
 ```bash
-sed -i 's|"starlight-llms-txt":|"@f5xc-salesdemos/starlight-llms-txt":|g' \
+sed -i 's|"starlight-llms-txt":|"@f5-sales-demo/starlight-llms-txt":|g' \
   .changeset/sidebar-nav.md \
   .changeset/federated-sites.md \
   .changeset/per-page-markdown.md
@@ -2084,12 +2084,12 @@ Verify:
 ```bash
 head -3 .changeset/sidebar-nav.md .changeset/federated-sites.md .changeset/per-page-markdown.md
 ```
-Expected: each file shows `"@f5xc-salesdemos/starlight-llms-txt": minor`.
+Expected: each file shows `"@f5-sales-demo/starlight-llms-txt": minor`.
 
 If mavam's cherry-picked `.changeset/markdown-page-generation.md` exists with `"starlight-llms-txt"` (his PR's original changeset entry), update it the same way:
 ```bash
 if [ -f .changeset/markdown-page-generation.md ]; then
-  sed -i 's|"starlight-llms-txt":|"@f5xc-salesdemos/starlight-llms-txt":|g' .changeset/markdown-page-generation.md
+  sed -i 's|"starlight-llms-txt":|"@f5-sales-demo/starlight-llms-txt":|g' .changeset/markdown-page-generation.md
 fi
 ```
 
@@ -2105,9 +2105,9 @@ Expected: pnpm detects the workspace dep rename, rewrites `pnpm-lock.yaml`. No e
 
 Run:
 ```bash
-pnpm pack --filter @f5xc-salesdemos/starlight-llms-txt --dry-run 2>&1 | grep -E '^[[:space:]]*(package:|[^[:space:]]+\.(ts|md|json))'
+pnpm pack --filter @f5-sales-demo/starlight-llms-txt --dry-run 2>&1 | grep -E '^[[:space:]]*(package:|[^[:space:]]+\.(ts|md|json))'
 ```
-Expected: `package: @f5xc-salesdemos/starlight-llms-txt@0.8.1`; file list includes `index.ts`, `generator.ts`, `llms.txt.ts`, `sidebar-nav.ts`, `federated-sites.ts`, `per-page-markdown-utils.ts`, `page-markdown.ts`, `page-markdown-generator.ts`, `entryToSimpleMarkdown.ts`, `utils.ts`, `types.ts`, `env.d.ts`, `llms-full.txt.ts`, `llms-small.txt.ts`, `llms-custom.txt.ts`, `CHANGELOG.md`, `README.md`, `LICENSE`, `package.json`.
+Expected: `package: @f5-sales-demo/starlight-llms-txt@0.8.1`; file list includes `index.ts`, `generator.ts`, `llms.txt.ts`, `sidebar-nav.ts`, `federated-sites.ts`, `per-page-markdown-utils.ts`, `page-markdown.ts`, `page-markdown-generator.ts`, `entryToSimpleMarkdown.ts`, `utils.ts`, `types.ts`, `env.d.ts`, `llms-full.txt.ts`, `llms-small.txt.ts`, `llms-custom.txt.ts`, `CHANGELOG.md`, `README.md`, `LICENSE`, `package.json`.
 
 It must NOT include: `vitest.config.ts`, `tsconfig.json`, anything under `test/`, `.npmignore`.
 
@@ -2117,7 +2117,7 @@ If any unwanted file is in the list, inspect your `files` array against Step 12.
 
 Run:
 ```bash
-pnpm --filter @f5xc-salesdemos/starlight-llms-txt test
+pnpm --filter @f5-sales-demo/starlight-llms-txt test
 ```
 Expected: all tests pass. (If you ran `pnpm test` here instead and saw "no projects matched", the root script edit in Step 12.6 was missed.)
 
@@ -2133,7 +2133,7 @@ Sanity-check the rename propagated through the build output:
 ```bash
 grep -l delucis docs/dist/llms.txt docs/dist/llms-full.txt
 ```
-Expected: no output (no files match). All URLs in the built llms.txt now use `f5xc-salesdemos.github.io`.
+Expected: no output (no files match). All URLs in the built llms.txt now use `f5-sales-demo.github.io`.
 
 - [ ] **Step 12.14: Commit everything atomically**
 
@@ -2149,7 +2149,7 @@ git add packages/starlight-llms-txt/package.json \
         pnpm-lock.yaml
 git rm packages/starlight-llms-txt/.npmignore
 git commit -m "$(cat <<'EOF'
-chore(package): rename to @f5xc-salesdemos/starlight-llms-txt
+chore(package): rename to @f5-sales-demo/starlight-llms-txt
 
 Atomic rename of all referring sites so no intermediate state breaks
 the build or test runner:
@@ -2184,7 +2184,7 @@ Create `.changeset/v1-0-0.md`:
 
 ```md
 ---
-"@f5xc-salesdemos/starlight-llms-txt": major
+"@f5-sales-demo/starlight-llms-txt": major
 ---
 
 Initial release of the F5 XC Sales Demos fork, derived from `starlight-llms-txt@0.8.1`. Adds:
@@ -2193,7 +2193,7 @@ Initial release of the F5 XC Sales Demos fork, derived from `starlight-llms-txt@
 - `sidebarNav` — sidebar hierarchy in `llms.txt` (Tier 2 routing), with frontmatter descriptions inlined automatically.
 - `federatedSites` — cross-repo links block in `llms.txt` (Tier 1 routing).
 
-The `starlight-llms-txt` package is authored by Chris Swithinbank (delucis). This fork exists to ship features needed by the f5xc-salesdemos documentation federation; we intend to upstream compatible features once they have been validated in production.
+The `starlight-llms-txt` package is authored by Chris Swithinbank (delucis). This fork exists to ship features needed by the f5-sales-demo documentation federation; we intend to upstream compatible features once they have been validated in production.
 ```
 
 - [ ] **Step 13.2: Verify changeset status**
@@ -2202,7 +2202,7 @@ Run:
 ```bash
 pnpm changeset status
 ```
-Expected output includes a line showing `@f5xc-salesdemos/starlight-llms-txt` slated for a **major** bump. The aggregate of the four changesets (`sidebar-nav.md`, `federated-sites.md`, `per-page-markdown.md`, and `v1-0-0.md`) resolves to the highest bump type, which is `major` from `v1-0-0.md`.
+Expected output includes a line showing `@f5-sales-demo/starlight-llms-txt` slated for a **major** bump. The aggregate of the four changesets (`sidebar-nav.md`, `federated-sites.md`, `per-page-markdown.md`, and `v1-0-0.md`) resolves to the highest bump type, which is `major` from `v1-0-0.md`.
 
 If the status output lists additional packages (e.g. `starlight-llms-txt-docs`), that's OK as long as `starlight-llms-txt-docs` shows up under `ignore` — it should, per `.changeset/config.json`'s `"ignore": ["starlight-llms-txt-docs"]` entry.
 
@@ -2230,13 +2230,13 @@ EOF
 
 Run:
 ```bash
-gh api repos/f5xc-salesdemos/starlight-llms-txt --jq '.allow_merge_commit,.allow_squash_merge'
+gh api repos/f5-sales-demo/starlight-llms-txt --jq '.allow_merge_commit,.allow_squash_merge'
 ```
 Expected: `true` then `true` (or at least the first — `allow_merge_commit: true`).
 
 If `allow_merge_commit` is `false`: flip the setting via the repo's web UI (Settings → General → Pull Requests) or via API:
 ```bash
-gh api -X PATCH repos/f5xc-salesdemos/starlight-llms-txt -f allow_merge_commit=true
+gh api -X PATCH repos/f5-sales-demo/starlight-llms-txt -f allow_merge_commit=true
 ```
 
 - [ ] **Step 14.2: Push the branch**
@@ -2252,14 +2252,14 @@ Expected: new remote branch created; tracking set up.
 Run:
 ```bash
 gh pr create \
-  --repo f5xc-salesdemos/starlight-llms-txt \
+  --repo f5-sales-demo/starlight-llms-txt \
   --base main \
   --head feature/enhancements-and-publishing \
   --title "feat: v1.0.0 — fork release with sidebarNav, federatedSites, perPageMarkdown" \
   --body "$(cat <<'EOF'
 ## Summary
 
-Initial release of `@f5xc-salesdemos/starlight-llms-txt@1.0.0`. Implements Step 1 of [xcsh#223](https://github.com/f5xc-salesdemos/xcsh/issues/223).
+Initial release of `@f5-sales-demo/starlight-llms-txt@1.0.0`. Implements Step 1 of [xcsh#223](https://github.com/f5-sales-demo/xcsh/issues/223).
 
 **Features added:**
 
@@ -2269,7 +2269,7 @@ Initial release of `@f5xc-salesdemos/starlight-llms-txt@1.0.0`. Implements Step 
 
 **Infrastructure:**
 
-- Package renamed to `@f5xc-salesdemos/starlight-llms-txt` (scoped publish).
+- Package renamed to `@f5-sales-demo/starlight-llms-txt` (scoped publish).
 - Vitest harness + unit tests for all pure helpers.
 - Release workflow guard fixed; `NPM_TOKEN` wired (classic automation token, not OIDC).
 - Explicit `files` array replacing `.npmignore`.
@@ -2287,7 +2287,7 @@ Initial release of `@f5xc-salesdemos/starlight-llms-txt@1.0.0`. Implements Step 
 - [ ] CI `test` job passes
 - [ ] CI `smoke` job passes
 - [ ] `pnpm pack --dry-run` file list excludes test files and vitest config
-- [ ] Review that no upstream-candidate commit contains a reference to `f5xc-salesdemos` (fork-only changes are in separate commits)
+- [ ] Review that no upstream-candidate commit contains a reference to `f5-sales-demo` (fork-only changes are in separate commits)
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 EOF
@@ -2304,14 +2304,14 @@ gh pr checks --watch
 ```
 Expected: `test` and `smoke` both pass. `Release` will not run on PRs (it's gated on `on: push: branches: main`).
 
-**If CI fails:** fix-forward. `test` failures indicate a unit-test regression — reproduce with `pnpm --filter @f5xc-salesdemos/starlight-llms-txt test`, fix, commit, push. `smoke` failures indicate a docs build regression — reproduce with `pnpm build:docs`, fix, commit, push. Do not merge the PR until both jobs are green.
+**If CI fails:** fix-forward. `test` failures indicate a unit-test regression — reproduce with `pnpm --filter @f5-sales-demo/starlight-llms-txt test`, fix, commit, push. `smoke` failures indicate a docs build regression — reproduce with `pnpm build:docs`, fix, commit, push. Do not merge the PR until both jobs are green.
 
 - [ ] **Step 14.5: Merge as a merge commit**
 
 Once CI is green and a human reviewer has approved:
 
 ```bash
-gh pr merge --merge --repo f5xc-salesdemos/starlight-llms-txt
+gh pr merge --merge --repo f5-sales-demo/starlight-llms-txt
 ```
 
 `--merge` creates a merge commit, preserving the individual commit history (required for the Co-Authored-By trail and for later cherry-picking). Do **not** use `--squash` or `--rebase`.
@@ -2328,7 +2328,7 @@ Expected: PR merged; branch `feature/enhancements-and-publishing` auto-deleted f
 
 Run:
 ```bash
-gh run list --workflow Release --repo f5xc-salesdemos/starlight-llms-txt --limit 3
+gh run list --workflow Release --repo f5-sales-demo/starlight-llms-txt --limit 3
 ```
 Expected: the most recent run shows the Task 14 merge as its trigger and status `success` or `completed`.
 
@@ -2336,7 +2336,7 @@ Expected: the most recent run shows the Task 14 merge as its trigger and status 
 
 **If the run failed:** open the failed run:
 ```bash
-gh run view --log --repo f5xc-salesdemos/starlight-llms-txt
+gh run view --log --repo f5-sales-demo/starlight-llms-txt
 ```
 Most likely causes at this stage: the release PR creation step failed because there were no changesets (shouldn't be the case — Tasks 4, 6, 10, 13 all added changesets) or because the changesets reference the pre-rename name (caught in Task 12.9). Fix forward and push to `main`.
 
@@ -2344,7 +2344,7 @@ Most likely causes at this stage: the release PR creation step failed because th
 
 Run:
 ```bash
-gh pr list --repo f5xc-salesdemos/starlight-llms-txt --search '"[ci] release" in:title' --limit 1
+gh pr list --repo f5-sales-demo/starlight-llms-txt --search '"[ci] release" in:title' --limit 1
 ```
 Expected: one open PR titled `[ci] release` opened by `github-actions[bot]`.
 
@@ -2352,8 +2352,8 @@ Expected: one open PR titled `[ci] release` opened by `github-actions[bot]`.
 
 Run:
 ```bash
-PR_NUM=$(gh pr list --repo f5xc-salesdemos/starlight-llms-txt --search '"[ci] release" in:title' --json number --jq '.[0].number')
-gh pr view $PR_NUM --repo f5xc-salesdemos/starlight-llms-txt
+PR_NUM=$(gh pr list --repo f5-sales-demo/starlight-llms-txt --search '"[ci] release" in:title' --json number --jq '.[0].number')
+gh pr view $PR_NUM --repo f5-sales-demo/starlight-llms-txt
 ```
 Expected contents:
 - `packages/starlight-llms-txt/package.json` version bumped `0.8.1` → `1.0.0`.
@@ -2361,12 +2361,12 @@ Expected contents:
 - All `.changeset/*.md` files deleted (consumed).
 - No other file changes.
 
-If any changeset `.md` file is still present, the release workflow didn't consume all of them — check the changeset package names match `@f5xc-salesdemos/starlight-llms-txt` exactly (Task 12.9).
+If any changeset `.md` file is still present, the release workflow didn't consume all of them — check the changeset package names match `@f5-sales-demo/starlight-llms-txt` exactly (Task 12.9).
 
 - [ ] **Step 15.4: Merge the release PR**
 
 ```bash
-gh pr merge $PR_NUM --merge --repo f5xc-salesdemos/starlight-llms-txt
+gh pr merge $PR_NUM --merge --repo f5-sales-demo/starlight-llms-txt
 ```
 Expected: merge succeeds; this triggers the publish step of the release workflow on the next run.
 
@@ -2380,32 +2380,32 @@ Expected: merge succeeds; this triggers the publish step of the release workflow
 
 Run:
 ```bash
-gh run list --workflow Release --repo f5xc-salesdemos/starlight-llms-txt --limit 1
+gh run list --workflow Release --repo f5-sales-demo/starlight-llms-txt --limit 1
 ```
 Copy the run ID and stream logs:
 ```bash
-gh run view <run-id> --log --repo f5xc-salesdemos/starlight-llms-txt
+gh run view <run-id> --log --repo f5-sales-demo/starlight-llms-txt
 ```
 
-Expected: the `changesets/action` step logs `🦋 info @f5xc-salesdemos/starlight-llms-txt@1.0.0 published` or similar, followed by a tag push `@f5xc-salesdemos/starlight-llms-txt@1.0.0`.
+Expected: the `changesets/action` step logs `🦋 info @f5-sales-demo/starlight-llms-txt@1.0.0 published` or similar, followed by a tag push `@f5-sales-demo/starlight-llms-txt@1.0.0`.
 
-**If publish fails with `403 Forbidden`:** the `NPM_TOKEN`'s owner lacks publish permission on the `@f5xc-salesdemos` org. Fix at npmjs.com (add `robinmordasiewicz` to the org with publish role), then push any commit to `main` to re-trigger. `changesets/action` is idempotent — it will retry the already-bumped version.
+**If publish fails with `403 Forbidden`:** the `NPM_TOKEN`'s owner lacks publish permission on the `@f5-sales-demo` org. Fix at npmjs.com (add `robinmordasiewicz` to the org with publish role), then push any commit to `main` to re-trigger. `changesets/action` is idempotent — it will retry the already-bumped version.
 
-**If publish fails with `404 Not Found`:** the `@f5xc-salesdemos` npm organization doesn't exist. Create it at <https://www.npmjs.com/org/create>, add the member, then re-trigger.
+**If publish fails with `404 Not Found`:** the `@f5-sales-demo` npm organization doesn't exist. Create it at <https://www.npmjs.com/org/create>, add the member, then re-trigger.
 
-**If publish fails with `409 Conflict`:** someone else has squatted the name. Unlikely; if so, choose a new name (e.g. `@f5xc-salesdemos/starlight-llms-txt-f5xc` — awkward but works) and re-run from Task 12.
+**If publish fails with `409 Conflict`:** someone else has squatted the name. Unlikely; if so, choose a new name (e.g. `@f5-sales-demo/starlight-llms-txt-f5xc` — awkward but works) and re-run from Task 12.
 
 - [ ] **Step 16.2: Verify on the npm registry**
 
 Run:
 ```bash
-npm view @f5xc-salesdemos/starlight-llms-txt version
+npm view @f5-sales-demo/starlight-llms-txt version
 ```
 Expected: `1.0.0`.
 
 Inspect the shipped tarball contents:
 ```bash
-npm view @f5xc-salesdemos/starlight-llms-txt files
+npm view @f5-sales-demo/starlight-llms-txt files
 ```
 Expected: no `test/`, no `vitest.config.ts`, no `.npmignore`, no `tsconfig.json`. Yes `README.md`, `LICENSE`, `package.json`, `CHANGELOG.md`, all `.ts` source files.
 
@@ -2413,7 +2413,7 @@ Expected: no `test/`, no `vitest.config.ts`, no `.npmignore`, no `tsconfig.json`
 
 Run:
 ```bash
-gh release view "@f5xc-salesdemos/starlight-llms-txt@1.0.0" --repo f5xc-salesdemos/starlight-llms-txt
+gh release view "@f5-sales-demo/starlight-llms-txt@1.0.0" --repo f5-sales-demo/starlight-llms-txt
 ```
 Expected: release created by `changesets/changelog-github` with the 1.0.0 changelog body.
 
@@ -2423,8 +2423,8 @@ Run (in a scratch directory outside the worktree):
 ```bash
 mkdir -p /tmp/smoke-install && cd /tmp/smoke-install
 npm init -y >/dev/null
-npm install @f5xc-salesdemos/starlight-llms-txt@1.0.0 --save-peer 2>&1 | tail -5
-ls node_modules/@f5xc-salesdemos/starlight-llms-txt/
+npm install @f5-sales-demo/starlight-llms-txt@1.0.0 --save-peer 2>&1 | tail -5
+ls node_modules/@f5-sales-demo/starlight-llms-txt/
 ```
 Expected: installs without errors; directory contains the `.ts` source files and `README.md`. Cleanup:
 ```bash
@@ -2437,11 +2437,11 @@ These are not commits — surface them to the user:
 
 1. **Rotate `NPM_TOKEN`.** The token value appeared in the brainstorming transcript. Rotate at <https://www.npmjs.com/settings/robinmordasiewicz/tokens>, update the GH Actions secret:
    ```bash
-   printf '%s' '<new-token>' | gh secret set NPM_TOKEN --repo f5xc-salesdemos/starlight-llms-txt --app actions
+   printf '%s' '<new-token>' | gh secret set NPM_TOKEN --repo f5-sales-demo/starlight-llms-txt --app actions
    ```
 2. **Close/comment on xcsh#223** with a link to the released package version.
 3. **Begin Steps 2–6 of xcsh#223** in their respective repos (docs-builder, docs-theme, docs portal, product repos, xcsh itself) — separate worktrees, separate plans.
-4. **Leave the upstream PR unsubmitted** until the package has been validated across the f5xc-salesdemos fleet (per the saved preference).
+4. **Leave the upstream PR unsubmitted** until the package has been validated across the f5-sales-demo fleet (per the saved preference).
 
 ---
 
