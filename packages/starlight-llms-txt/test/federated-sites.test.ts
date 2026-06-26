@@ -52,12 +52,12 @@ describe('renderFederatedSites', () => {
     const out = renderFederatedSites([
       {
         label: 'WAF',
-        url: 'https://f5xc-salesdemos.github.io/waf/llms.txt',
+        url: 'https://f5-sales-demo.github.io/waf/llms.txt',
         description: 'Web application firewall',
       },
       {
         label: 'CSD',
-        url: 'https://f5xc-salesdemos.github.io/csd/llms.txt',
+        url: 'https://f5-sales-demo.github.io/csd/llms.txt',
         description: 'Client-side defense',
       },
     ]);

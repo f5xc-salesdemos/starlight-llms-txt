@@ -1,25 +1,25 @@
 ---
-title: "@f5xc-salesdemos/starlight-llms-txt v1.0.0 fork release — design"
+title: "@f5-sales-demo/starlight-llms-txt v1.0.0 fork release — design"
 date: 2026-04-22
 status: approved
 scope: packages/starlight-llms-txt (this repo only)
 supersedes: —
-relates-to: f5xc-salesdemos/xcsh#223
+relates-to: f5-sales-demo/xcsh#223
 ---
 
 # Summary
 
-Ship a 1.0.0 release of `@f5xc-salesdemos/starlight-llms-txt` — a fork of `delucis/starlight-llms-txt@0.8.1` — adding three options used by the f5xc-salesdemos documentation federation: `perPageMarkdown` (rebased from upstream PR #32), `sidebarNav` with automatic frontmatter descriptions, and `federatedSites`. Upstream submission is explicitly deferred until the fork is validated in production across the 25 product repos.
+Ship a 1.0.0 release of `@f5-sales-demo/starlight-llms-txt` — a fork of `delucis/starlight-llms-txt@0.8.1` — adding three options used by the f5-sales-demo documentation federation: `perPageMarkdown` (rebased from upstream PR #32), `sidebarNav` with automatic frontmatter descriptions, and `federatedSites`. Upstream submission is explicitly deferred until the fork is validated in production across the 25 product repos.
 
 # Context
 
 ## Why a fork exists
 
-The upstream plugin (v0.8.1) covers ~80% of what `f5xc-salesdemos` docs federation needs. The remaining ~20% is three features that:
+The upstream plugin (v0.8.1) covers ~80% of what `f5-sales-demo` docs federation needs. The remaining ~20% is three features that:
 
 - Don't exist in any released version.
 - Exist partially as an 8-month-stalled upstream PR (delucis#32 — perPageMarkdown).
-- Are needed now to support the xcsh cascading llms.txt knowledge hierarchy ([xcsh#223](https://github.com/f5xc-salesdemos/xcsh/issues/223)).
+- Are needed now to support the xcsh cascading llms.txt knowledge hierarchy ([xcsh#223](https://github.com/f5-sales-demo/xcsh/issues/223)).
 
 ## Scope of this spec
 
@@ -27,7 +27,7 @@ This spec covers **only Step 1 of xcsh#223** — the plugin fork. Steps 2–6 (d
 
 ## Starting state
 
-- Repo: `f5xc-salesdemos/starlight-llms-txt`, forked from `delucis/starlight-llms-txt`.
+- Repo: `f5-sales-demo/starlight-llms-txt`, forked from `delucis/starlight-llms-txt`.
 - Branch: `feature/enhancements-and-publishing` (off `main`).
 - Package still named `starlight-llms-txt` (will conflict on publish — see §7.1).
 - No test suite exists in the package or the monorepo.
@@ -40,7 +40,7 @@ This spec covers **only Step 1 of xcsh#223** — the plugin fork. Steps 2–6 (d
 | # | Decision | Chosen |
 |---|---|---|
 | 1 | Fork posture | Upstream-first design, PRs submitted to `delucis/` **only after production validation**; fork is temporary in principle, operating indefinitely until upstream catches up. |
-| 2 | Interim publish mechanism | `@f5xc-salesdemos/starlight-llms-txt` on npmjs as a rename-only fork (plus feature commits). |
+| 2 | Interim publish mechanism | `@f5-sales-demo/starlight-llms-txt` on npmjs as a rename-only fork (plus feature commits). |
 | 3 | Test location | Fork-only. Upstream PRs (when submitted) will contain no tests, matching delucis house style. |
 | 4 | Test framework | Vitest, unit-heavy. Pure render helpers extracted; integration coverage via existing docs-build smoke test. |
 | 5 | delucis#32 handling | Rebase mavam's `topic/markdown-pages` branch into our fork, preserve authorship via `Co-Authored-By`. |
@@ -73,11 +73,11 @@ Two commit classes coexist on the implementation branch:
 
 ## Fork-only set
 
-- Package rename: `starlight-llms-txt` → `@f5xc-salesdemos/starlight-llms-txt`.
+- Package rename: `starlight-llms-txt` → `@f5-sales-demo/starlight-llms-txt`.
 - Repository/homepage/bugs metadata pointing at the fork.
 - Release workflow guard swap and `NPM_TOKEN` wiring.
 - Changesets config changelog repo pointer.
-- Docs-site `site` URL pointed at `f5xc-salesdemos.github.io`.
+- Docs-site `site` URL pointed at `f5-sales-demo.github.io`.
 - `1.0.0` changeset entry.
 - Vitest harness, dev dependency, scripts, config.
 - `packages/starlight-llms-txt/test/**` unit tests.
@@ -358,19 +358,19 @@ Each helper is authored after its test file exists and fails. Red → green → 
 ```diff
 // packages/starlight-llms-txt/package.json
 - "name": "starlight-llms-txt",
-+ "name": "@f5xc-salesdemos/starlight-llms-txt",
++ "name": "@f5-sales-demo/starlight-llms-txt",
 - "author": "delucis",
-+ "author": "f5xc-salesdemos (fork of delucis/starlight-llms-txt)",
++ "author": "f5-sales-demo (fork of delucis/starlight-llms-txt)",
 - "homepage": "https://delucis.github.io/starlight-llms-txt/",
-+ "homepage": "https://f5xc-salesdemos.github.io/starlight-llms-txt/",
++ "homepage": "https://f5-sales-demo.github.io/starlight-llms-txt/",
   "repository": {
     "type": "git",
 -   "url": "https://github.com/delucis/starlight-llms-txt.git",
-+   "url": "https://github.com/f5xc-salesdemos/starlight-llms-txt.git",
++   "url": "https://github.com/f5-sales-demo/starlight-llms-txt.git",
     "directory": "packages/starlight-llms-txt"
   },
 - "bugs": "https://github.com/delucis/starlight-llms-txt/issues",
-+ "bugs": "https://github.com/f5xc-salesdemos/starlight-llms-txt/issues",
++ "bugs": "https://github.com/f5-sales-demo/starlight-llms-txt/issues",
   "publishConfig": { "access": "public" }
 ```
 
@@ -382,7 +382,7 @@ Each helper is authored after its test file exists and fails. Red → green → 
     release:
       name: Release
 -     if: ${{ github.repository_owner == 'delucis' }}
-+     if: ${{ github.repository_owner == 'f5xc-salesdemos' }}
++     if: ${{ github.repository_owner == 'f5-sales-demo' }}
       runs-on: ubuntu-latest
       permissions:
         contents: write
@@ -418,7 +418,7 @@ Each helper is authored after its test file exists and fails. Red → green → 
 
 ```diff
 - "changelog": ["@changesets/changelog-github", { "repo": "delucis/starlight-llms-txt" }],
-+ "changelog": ["@changesets/changelog-github", { "repo": "f5xc-salesdemos/starlight-llms-txt" }],
++ "changelog": ["@changesets/changelog-github", { "repo": "f5-sales-demo/starlight-llms-txt" }],
 ```
 
 `ignore: ["starlight-llms-txt-docs"]` stays.
@@ -429,10 +429,10 @@ Each helper is authored after its test file exists and fails. Red → green → 
 
 ```diff
 - site: 'https://delucis.github.io',
-+ site: 'https://f5xc-salesdemos.github.io',
++ site: 'https://f5-sales-demo.github.io',
 ```
 
-Also update hardcoded links inside the same file (`social.github.href`, `editLink.baseUrl`) to point at `f5xc-salesdemos/starlight-llms-txt`.
+Also update hardcoded links inside the same file (`social.github.href`, `editLink.baseUrl`) to point at `f5-sales-demo/starlight-llms-txt`.
 
 ## §7.5 Initial 1.0.0 changeset
 
@@ -440,7 +440,7 @@ Also update hardcoded links inside the same file (`social.github.href`, `editLin
 
 ```markdown
 ---
-"@f5xc-salesdemos/starlight-llms-txt": major
+"@f5-sales-demo/starlight-llms-txt": major
 ---
 
 Initial release of the F5 XC Sales Demos fork, derived from `starlight-llms-txt@0.8.1`. Adds:
@@ -449,7 +449,7 @@ Initial release of the F5 XC Sales Demos fork, derived from `starlight-llms-txt@
 - `sidebarNav` — sidebar hierarchy in `llms.txt` (Tier 2 routing), with frontmatter descriptions inlined automatically
 - `federatedSites` — cross-repo links block in `llms.txt` (Tier 1 routing)
 
-The `starlight-llms-txt` package is authored by Chris Swithinbank (delucis). This fork exists to ship features needed by the f5xc-salesdemos documentation federation; we intend to upstream compatible features once they have been validated in production.
+The `starlight-llms-txt` package is authored by Chris Swithinbank (delucis). This fork exists to ship features needed by the f5-sales-demo documentation federation; we intend to upstream compatible features once they have been validated in production.
 ```
 
 One entry covering all four features. changesets emits a single 1.0.0 release PR.
@@ -459,9 +459,9 @@ One entry covering all four features. changesets emits a single 1.0.0 release PR
 Replace `packages/starlight-llms-txt/README.md`:
 
 ```markdown
-# @f5xc-salesdemos/starlight-llms-txt
+# @f5-sales-demo/starlight-llms-txt
 
-Fork of [`starlight-llms-txt`](https://github.com/delucis/starlight-llms-txt) by Chris Swithinbank, extended for the [f5xc-salesdemos](https://github.com/f5xc-salesdemos) documentation federation.
+Fork of [`starlight-llms-txt`](https://github.com/delucis/starlight-llms-txt) by Chris Swithinbank, extended for the [f5-sales-demo](https://github.com/f5-sales-demo) documentation federation.
 
 ## Additions over upstream
 
@@ -469,15 +469,15 @@ Fork of [`starlight-llms-txt`](https://github.com/delucis/starlight-llms-txt) by
 - `sidebarNav` — sidebar hierarchy in `llms.txt`, with frontmatter descriptions inlined automatically
 - `federatedSites` — cross-repo links for federated doc portals
 
-See the [configuration docs](https://f5xc-salesdemos.github.io/starlight-llms-txt/configuration/) for the full option reference.
+See the [configuration docs](https://f5-sales-demo.github.io/starlight-llms-txt/configuration/) for the full option reference.
 
 ## Relationship to upstream
 
-Compatible features are intended to land upstream at `delucis/starlight-llms-txt` after production validation. Until then, this package tracks the f5xc-salesdemos integration needs.
+Compatible features are intended to land upstream at `delucis/starlight-llms-txt` after production validation. Until then, this package tracks the f5-sales-demo integration needs.
 
 ## License
 
-MIT — copyright Chris Swithinbank, fork modifications by f5xc-salesdemos contributors.
+MIT — copyright Chris Swithinbank, fork modifications by f5-sales-demo contributors.
 ```
 
 `LICENSE` stays byte-identical to upstream.
@@ -486,9 +486,9 @@ MIT — copyright Chris Swithinbank, fork modifications by f5xc-salesdemos contr
 
 Before the first `changesets publish` runs, confirm:
 
-1. The `f5xc-salesdemos` npm organization exists at npmjs.com.
+1. The `f5-sales-demo` npm organization exists at npmjs.com.
 2. `robinmordasiewicz` is a member of that org with **publish** permission.
-3. `@f5xc-salesdemos/starlight-llms-txt` has not been claimed by anyone else.
+3. `@f5-sales-demo/starlight-llms-txt` has not been claimed by anyone else.
 4. `NPM_TOKEN` secret exists on the repo (✅ already set during brainstorming — see §7.9).
 
 Any of (1)–(3) failing will produce a `403 Forbidden` or `404 Not Found` during publish. Fix and retry by pushing any commit to `main`.
@@ -514,10 +514,10 @@ Delete `packages/starlight-llms-txt/.npmignore` — npm ignores it when `files` 
 
 ## §7.9 NPM token secret
 
-Already created during brainstorming. Verified on `f5xc-salesdemos/starlight-llms-txt`:
+Already created during brainstorming. Verified on `f5-sales-demo/starlight-llms-txt`:
 
 ```
-$ gh secret list --repo f5xc-salesdemos/starlight-llms-txt --app actions
+$ gh secret list --repo f5-sales-demo/starlight-llms-txt --app actions
 NPM_TOKEN    2026-04-22T05:17:48Z
 ```
 
@@ -574,7 +574,7 @@ Commit: `ci(release): swap owner guard, use NPM_TOKEN`.
 
 ### C2. Package rename + metadata
 
-Commit: `chore(package): rename to @f5xc-salesdemos/starlight-llms-txt`.
+Commit: `chore(package): rename to @f5-sales-demo/starlight-llms-txt`.
 
 All renames and consumer updates must land atomically in one commit — running `pnpm build:docs` or `pnpm test` between the package rename and the consumer updates will fail or silently no-op.
 
@@ -583,19 +583,19 @@ All renames and consumer updates must land atomically in one commit — running 
 - Replace §7.6 README.
 - Update §7.3 changesets config changelog pointer.
 - Update §7.4 docs site URL.
-- `docs/package.json`: rename the workspace dependency key from `"starlight-llms-txt": "workspace:*"` to `"@f5xc-salesdemos/starlight-llms-txt": "workspace:*"` (otherwise `pnpm build:docs` fails on a dangling workspace reference).
-- `docs/astro.config.ts`: update the import from `'starlight-llms-txt'` to `'@f5xc-salesdemos/starlight-llms-txt'` (otherwise Astro fails to resolve the plugin).
-- Update the root `package.json` `test` script filter from `starlight-llms-txt` to `@f5xc-salesdemos/starlight-llms-txt` (the pnpm filter is the package name; it stops matching after rename and `pnpm test` silently exits zero with no tests run).
+- `docs/package.json`: rename the workspace dependency key from `"starlight-llms-txt": "workspace:*"` to `"@f5-sales-demo/starlight-llms-txt": "workspace:*"` (otherwise `pnpm build:docs` fails on a dangling workspace reference).
+- `docs/astro.config.ts`: update the import from `'starlight-llms-txt'` to `'@f5-sales-demo/starlight-llms-txt'` (otherwise Astro fails to resolve the plugin).
+- Update the root `package.json` `test` script filter from `starlight-llms-txt` to `@f5-sales-demo/starlight-llms-txt` (the pnpm filter is the package name; it stops matching after rename and `pnpm test` silently exits zero with no tests run).
 - Update the `test` job in `.github/workflows/ci.yml` filter the same way.
 - Run `pnpm install` to update `pnpm-lock.yaml` (reflects the new workspace dep key).
-- **Exit criteria:** `pnpm pack --filter @f5xc-salesdemos/starlight-llms-txt --dry-run` shows the expected file list with the correct package name; `pnpm --filter @f5xc-salesdemos/starlight-llms-txt test` passes (explicitly naming the filter, so a silent no-match is impossible); `pnpm build:docs` green.
+- **Exit criteria:** `pnpm pack --filter @f5-sales-demo/starlight-llms-txt --dry-run` shows the expected file list with the correct package name; `pnpm --filter @f5-sales-demo/starlight-llms-txt test` passes (explicitly naming the filter, so a silent no-match is impossible); `pnpm build:docs` green.
 
 ### C3. Initial 1.0.0 changeset
 
 Commit: `docs(changeset): 1.0.0 initial fork release`.
 
 - Add `.changeset/v1-0-0.md` per §7.5.
-- **Exit criteria:** `pnpm changeset status` shows a pending major bump to `@f5xc-salesdemos/starlight-llms-txt`.
+- **Exit criteria:** `pnpm changeset status` shows a pending major bump to `@f5-sales-demo/starlight-llms-txt`.
 
 ## Phase D — Merge & release
 
@@ -603,13 +603,13 @@ Commit: `docs(changeset): 1.0.0 initial fork release`.
 
 Single PR titled `feat: v1.0.0 — fork release with sidebarNav, federatedSites, perPageMarkdown`. Preserves mavam's Co-Authored-By lines on B3's cherry-picked commits. Uses a merge commit strategy (not squash) so the upstream-candidate commits remain individually cherry-pickable later.
 
-Pre-flight check: confirm `f5xc-salesdemos/starlight-llms-txt` repo settings allow merge commits (`gh api repos/f5xc-salesdemos/starlight-llms-txt --jq '.allow_merge_commit'` → `true`). If the repo is squash-only, either flip the setting for this one merge or accept that the cherry-pick-later workflow requires reconstructing individual commits from the squashed diff.
+Pre-flight check: confirm `f5-sales-demo/starlight-llms-txt` repo settings allow merge commits (`gh api repos/f5-sales-demo/starlight-llms-txt --jq '.allow_merge_commit'` → `true`). If the repo is squash-only, either flip the setting for this one merge or accept that the cherry-pick-later workflow requires reconstructing individual commits from the squashed diff.
 
 - **Exit criteria:** PR CI (test + smoke) green; reviewed; merged to `main` as a merge commit (not squash).
 
 ### D2. Automated release PR
 
-First merge triggers the release workflow, which opens a "[ci] release" PR bumping `@f5xc-salesdemos/starlight-llms-txt` to 1.0.0 and regenerating `CHANGELOG.md`.
+First merge triggers the release workflow, which opens a "[ci] release" PR bumping `@f5-sales-demo/starlight-llms-txt` to 1.0.0 and regenerating `CHANGELOG.md`.
 
 - **Exit criteria:** Release PR opens automatically; user reviews and merges.
 
@@ -617,7 +617,7 @@ First merge triggers the release workflow, which opens a "[ci] release" PR bumpi
 
 Merging the release PR re-triggers the release workflow. `changesets/action` calls `changesets publish`, which runs `npm publish` using `NPM_TOKEN`.
 
-- **Exit criteria:** `npm view @f5xc-salesdemos/starlight-llms-txt` shows 1.0.0; tag `@f5xc-salesdemos/starlight-llms-txt@1.0.0` pushed; GitHub Release created by `@changesets/changelog-github`.
+- **Exit criteria:** `npm view @f5-sales-demo/starlight-llms-txt` shows 1.0.0; tag `@f5-sales-demo/starlight-llms-txt@1.0.0` pushed; GitHub Release created by `@changesets/changelog-github`.
 
 ## Rollback / retry
 
@@ -628,7 +628,7 @@ Merging the release PR re-triggers the release workflow. `changesets/action` cal
 # Non-Goals
 
 - Any changes to `docs-builder`, `docs-theme`, `docs`, `docs-control`, `xcsh`, or product repos. All downstream consumers, all separate worktrees.
-- Upstream PR submission to `delucis/starlight-llms-txt`. Deferred per saved preference until production-validated across the f5xc-salesdemos fleet.
+- Upstream PR submission to `delucis/starlight-llms-txt`. Deferred per saved preference until production-validated across the f5-sales-demo fleet.
 - Provenance / OIDC signing.
 - Coverage reporting.
 - Removing or replacing PR #32's 17-commit history with a squash. We replay their history to preserve bisectability for mavam.
@@ -646,7 +646,7 @@ Tracked for post-v1:
 # References
 
 - [llms.txt specification](https://llmstxt.org/)
-- [xcsh#223 — cascading llms.txt knowledge hierarchy](https://github.com/f5xc-salesdemos/xcsh/issues/223)
+- [xcsh#223 — cascading llms.txt knowledge hierarchy](https://github.com/f5-sales-demo/xcsh/issues/223)
 - [delucis#32 — per-page markdown PR](https://github.com/delucis/starlight-llms-txt/pull/32) (head: `tenzir/starlight-llms-txt@topic/markdown-pages` / `2a1ae6d259cee07d7466281550b1103b3e48fc5f`)
 - [delucis#28 — per-page markdown issue](https://github.com/delucis/starlight-llms-txt/issues/28)
 - [starlight-llms-txt configuration docs](https://delucis.github.io/starlight-llms-txt/configuration/)
