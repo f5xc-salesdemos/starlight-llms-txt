@@ -1,5 +1,11 @@
 # starlight-llms-txt
 
+## 1.3.1
+
+### Patch Changes
+
+- [#195](https://github.com/f5xc-salesdemos/starlight-llms-txt/pull/195) [`5b734d4`](https://github.com/f5xc-salesdemos/starlight-llms-txt/commit/5b734d4affd4e288238703f774f1215c7197847d) Thanks [@robinmordasiewicz](https://github.com/robinmordasiewicz)! - Widen `peerDependencies.astro` from `^6.0.0` to `>=6.0.0` so consumers can use astro 7+.
+
 ## 1.3.0
 
 ### Minor Changes
