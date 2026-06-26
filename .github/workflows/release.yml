@@ -9,7 +9,7 @@ on:
 jobs:
   release:
     name: Release
-    if: ${{ github.repository_owner == 'f5xc-salesdemos' }}
+    if: ${{ github.repository_owner == 'f5-sales-demo' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
