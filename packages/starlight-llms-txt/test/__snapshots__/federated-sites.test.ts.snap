@@ -3,6 +3,6 @@
 exports[`renderFederatedSites > matches the xcsh#223 reference output 1`] = `
 "## Federated Sites
 
-- [WAF](https://f5xc-salesdemos.github.io/waf/llms.txt): Web application firewall
-- [CSD](https://f5xc-salesdemos.github.io/csd/llms.txt): Client-side defense"
+- [WAF](https://f5-sales-demo.github.io/waf/llms.txt): Web application firewall
+- [CSD](https://f5-sales-demo.github.io/csd/llms.txt): Client-side defense"
 `;
